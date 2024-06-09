@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+      # - ./requirements/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      # - ${SSL_CERTIFICATE}:/etc/ssl/certs/your_certificate.crt:ro
+      # - ${SSL_CERTIFICATE_KEY}:/etc/ssl/private/your_certificate.key:ro
+    environment:
+      - DOMAIN_NAME=craimond.42.fr
+      - SSL_CERTIFICATE=/etc/ssl/certs/your_certificate.crt
+      - SSL_CERTIFICATE_KEY=/etc/ssl/private/your_certificate.key
+    networks:
+      # - webnet
+
+  # wordpress:
+  #   build:
+  #     context: ./requirements/wordpress
+  #   container_name: wordpress
+  #   environment:
+  #     - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+  #     - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+  #     - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+  #     - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #   networks:
+  #     - webnet
+
+  # mariadb:
+  #   build:
+  #     context: ./requirements/mariadb
+  #   container_name: mariadb
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql
+  #   networks:
+  #     - webnet
+
+# volumes:
+#   wordpress_data:
+#   mariadb_data:
+
+# networks:
+#   webnet:
