@@ -24,10 +24,10 @@ services:
 	#     context: ./requirements/mariadb
 	#   container_name: mariadb
 	#   environment:
-	#     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-	#     - MYSQL_USER=${MYSQL_USER}
-	#     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-	#     - MYSQL_DATABASE=${MYSQL_DATABASE}
+	#     - SQL_DATABASE=${SQL_DATABASE}
+  #     - SQL_USER=${SQL_USER}
+  #     - SQL_PASSWORD=${SQL_PASSWORD}
+  #     - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
 	#   volumes:
 	#     - mariadb_data:/var/lib/mysql
 	#   networks:
