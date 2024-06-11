@@ -9,9 +9,9 @@ services:
 			- "443:443"
 			- "80:80"
 		environment: #environment variables exported after the image is built
-			- DOMAIN_NAME=craimond.42.fr
-			- SSL_CERTIFICATE=/etc/ssl/certs/craimond.42.fr.crt
-			- SSL_CERTIFICATE_KEY=/etc/ssl/private/craimond.42.fr.key
+			- DOMAIN_NAME=${DOMAIN_NAME}
+			- SSL_CERTIFICATE=${SSL_CERTIFICATE}
+			- SSL_CERTIFICATE_KEY=${SSL_CERTIFICATE_KEY}
 		networks: #define the network that this container will be using (containers in the same network can communicate with each other)
 			- webnet
 		volumes: #link the local files to the container (allowing access at runtime), :ro means read only
@@ -19,19 +19,22 @@ services:
 			- ./requirements/nginx/craimond.42.frs/craimond.42.fr.crt:/etc/ssl/craimond.42.frs/craimond.42.fr.crt:ro
 			- ./requirements/nginx/craimond.42.frs/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
 
-  # mariadb:
-	#   build:
-	#     context: ./requirements/mariadb
-	#   container_name: mariadb
-	#   environment:
-	#     - SQL_DATABASE=${SQL_DATABASE}
-  #     - SQL_USER=${SQL_USER}
-  #     - SQL_PASSWORD=${SQL_PASSWORD}
-  #     - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-	#   volumes:
-	#     - mariadb_data:/var/lib/mysql
-	#   networks:
-	#     - webnet
+	mariadb:
+		build: 
+			context: ./requirements/mariadb
+		container_name: mariadb
+		ports:
+			- "3306:3306"
+		environment:
+			- SQL_DATABASE=${SQL_DATABASE}
+			- SQL_USER=${SQL_USER}
+			- SQL_PASSWORD=${SQL_PASSWORD}
+			- SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+		networks:
+			- webnet
+		volumes:
+			- ./requirements/mariadb/conf/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf:ro
+			- mariadb_data:/var/lib/mysql
 
 	# wordpress:
 	#   build:
@@ -49,9 +52,9 @@ services:
 
 
 volumes:
-  # wordpress_data:
-  # mariadb_data:
+	# wordpress_data:
+	mariadb_data:
 
 networks:
-  webnet:
+	webnet:
 		driver: bridge
