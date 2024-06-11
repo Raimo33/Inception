@@ -1,16 +1,17 @@
 #base image
-FROM debian:11.9
+FROM alpine:3.19
 
 #install dependencies
-RUN apt update && apt install -y nginx openssl
+RUN apk update && apk add nginx openssl && mkdir -p /run/nginx
 
-RUN mkdir -p /run/nginx
-
-#copy the actual file in the image during the building process
-COPY conf/nginx.conf /etc/nginx/nginx.conf 
+#copy the actual local files in the image during the building process
+COPY conf/* /etc/nginx/conf.d/
 
 #DOCUMENT (not actually expose yet) the port the container listens on at runtime.
 EXPOSE 80 443
+
+# Use tini as the init system for forwarding signals to the child processes
+ENTRYPOINT ["/sbin/tini", "--"]
 
 #command to run the container
 CMD ["nginx", "-g", "daemon off;"]
