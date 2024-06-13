@@ -1,18 +1,30 @@
-#base image
+# Base image
 FROM alpine:3.19
 
-#install dependencies
-RUN apk update && apk add wget
-RUN apk add php7.4 php7.4-fpm php-mysql mariadb-client
+# Install dependencies
+RUN apk update && apk add --no-cache \
+    wget \
+    php \
+    php-fpm \
+    php-mysqli \
+    mariadb-client
+
+# Download WordPress
 RUN wget https://github.com/WordPress/WordPress/archive/refs/tags/6.5.4.tar.gz -P /var/www
 
 WORKDIR /var/www
 
-#extract the wordpress files
+# Extract the WordPress files
 RUN tar -xvf 6.5.4.tar.gz && rm 6.5.4.tar.gz
 
-#change owner of the wordpress files (group:user)
-RUN	chown -R root:root ./wordpress
+# Change owner of the WordPress files (group:user)
+RUN chown -R root:root ./WordPress-6.5.4
 
+# Configure PHP-FPM
+COPY conf/www.conf /etc/php/php-fpm.d/www.conf
 
+# Expose port 9000 for PHP-FPM
+EXPOSE 9000
 
+# Start PHP-FPM
+ENTRYPOINT ["php-fpm", "-F"]

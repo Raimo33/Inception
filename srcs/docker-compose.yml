@@ -1,60 +1,60 @@
 version: '3.8'
 
 services:
-	nginx:
-		build:
-			context: ./requirements/nginx
-		container_name: nginx
-		ports: #expose the ports of the container to the host
-			- "443:443"
-			- "80:80"
-		environment: #environment variables exported after the image is built
-			- DOMAIN_NAME=${DOMAIN_NAME}
-			- SSL_CERTIFICATE=${SSL_CERTIFICATE}
-			- SSL_CERTIFICATE_KEY=${SSL_CERTIFICATE_KEY}
-		networks: #define the network that this container will be using (containers in the same network can communicate with each other)
-			- webnet
-		volumes: #link the local files to the container (allowing access at runtime), :ro means read only
-			- ./requirements/nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
-			- ./requirements/nginx/craimond.42.frs/craimond.42.fr.crt:/etc/ssl/craimond.42.frs/craimond.42.fr.crt:ro
-			- ./requirements/nginx/craimond.42.frs/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
+  nginx:
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    ports: #expose the ports of the container to the host
+      - "443:443"
+      - "80:80"
+    environment: #environment variables exported after the image is built
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - SSL_CERTIFICATE_PATH=${SSL_CERTIFICATE_PATH}
+      - SSL_CERTIFICATE_KEY=${SSL_CERTIFICATE_KEY}
+    networks: #define the network that this container will be using (containers in the same network can communicate with each other)
+      - webnet
+    volumes: #link the local files to the container (allowing access at runtime), :ro means read only
+      - ./requirements/nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
+      - ./requirements/nginx/conf/craimond.42.fr.crt:/etc/ssl/craimond.42.fr/craimond.42.fr.crt:ro
+      - ./requirements/nginx/conf/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
 
-	mariadb:
-		build: 
-			context: ./requirements/mariadb
-		container_name: mariadb
-		ports:
-			- "3306:3306"
-		environment:
-			- SQL_DATABASE=${SQL_DATABASE}
-			- SQL_USER=${SQL_USER}
-			- SQL_PASSWORD=${SQL_PASSWORD}
-			- SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
-		networks:
-			- webnet
-		volumes:
-			- ./requirements/mariadb/conf/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf:ro
-			- mariadb_data:/var/lib/mysql
+  mariadb:
+    build: 
+      context: ./requirements/mariadb
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      - SQL_DATABASE=${SQL_DATABASE}
+      - SQL_USER=${SQL_USER}
+      - SQL_PASSWORD=${SQL_PASSWORD}
+      - SQL_ROOT_PASSWORD=${SQL_ROOT_PASSWORD}
+    networks:
+      - webnet
+    volumes:
+      - ./requirements/mariadb/conf/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf:ro
+      - mariadb_data:/var/lib/mysql
 
-	# wordpress:
-	#   build:
-	#     context: ./requirements/wordpress
-	#   container_name: wordpress
-	#   environment:
-	#     - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
-	#     - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
-	#     - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
-	#     - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
-	#   volumes:
-	#     - wordpress_data:/var/www/html
-	#   networks:
-	#     - webnet
-
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    container_name: wordpress
+    environment:
+      - WORDPRESS_DB_HOST=mariadb:3306
+      - WORDPRESS_DB_NAME=${SQL_DATABASE}
+      - WORDPRESS_DB_USER=${SQL_USER}
+      - WORDPRESS_DB_PASSWORD=${SQL_PASSWORD}
+    networks:
+      - webnet
+    volumes:
+      - ./requirements/wordpress/conf/wp-config.php:/var/www/html/wordpress/wp-config.php:ro
+      - wordpress_data:/var/www/html/wordpress
 
 volumes:
-	# wordpress_data:
-	mariadb_data:
+  wordpress_data:
+  mariadb_data:
 
 networks:
-	webnet:
-		driver: bridge
+  webnet:
+    driver: bridge
