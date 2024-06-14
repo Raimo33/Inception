@@ -26,5 +26,8 @@ COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
+# Use tini as the init system for forwarding signals to the child processes
+ENTRYPOINT ["/sbin/tini", "--"]
+
 # Start PHP-FPM
-ENTRYPOINT ["php-fpm7.4", "-F"]
+CMD ["php-fpm7.4", "-F"]

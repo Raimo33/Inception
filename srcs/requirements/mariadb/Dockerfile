@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 15:12:45 by craimond          #+#    #+#              #
-#    Updated: 2024/06/13 15:12:47 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/14 16:17:37 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,5 +31,8 @@ RUN chmod +x /run/mysqld/init_db.sh
 # Expose the port for MariaDB
 EXPOSE 3306
 
+# Use tini as the init system for forwarding signals to the child processes
+ENTRYPOINT ["/sbin/tini", "--"]
+
 # Run the MariaDB server with initialization
-ENTRYPOINT ["/run/mysqld/init_db.sh"]
+CMD ["/run/mysqld/init_db.sh"]
