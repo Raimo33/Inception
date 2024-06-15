@@ -12,8 +12,8 @@ services:
       - webnet
     volumes: #link the local files to the container (allowing access at runtime), :ro means read only
       - ./requirements/nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
-      - ./requirements/nginx/conf/craimond.42.fr.crt:/etc/ssl/craimond.42.fr/craimond.42.fr.crt:ro
-      - ./requirements/nginx/conf/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
+      - ./requirements/nginx/conf/certs/craimond.42.fr.crt:/etc/ssl/certs/craimond.42.fr.crt:ro
+      - ./requirements/nginx/conf/private/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
 
   mariadb:
     build: 
