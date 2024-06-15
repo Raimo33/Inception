@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/13 15:12:45 by craimond          #+#    #+#              #
-#    Updated: 2024/06/13 15:12:47 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/15 13:52:07 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ FROM alpine:3.19
 
 # Install dependencies
 RUN apk update && \
-    apk add mariadb mariadb-client mariadb-server-utils bash
+    apk add mariadb mariadb-client mariadb-server-utils bash tini
 
 # Copy the MariaDB server configuration file
 COPY conf/50-server.conf /etc/mysql/mariadb.conf.d/50-server.conf
@@ -31,5 +31,8 @@ RUN chmod +x /run/mysqld/init_db.sh
 # Expose the port for MariaDB
 EXPOSE 3306
 
+# Use tini as the init system for forwarding signals to the child processes
+ENTRYPOINT ["/sbin/tini", "--"]
+
 # Run the MariaDB server with initialization
-ENTRYPOINT ["/run/mysqld/init_db.sh"]
+CMD ["/run/mysqld/init_db.sh"]
