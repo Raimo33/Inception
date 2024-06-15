@@ -7,13 +7,15 @@ services:
     container_name: nginx
     ports: #expose the ports of the container to the host
       - "443:443"
-      - "80:80"
     networks: #define the network that this container will be using (containers in the same network can communicate with each other)
       - webnet
     volumes: #link the local files to the container (allowing access at runtime), :ro means read only
       - ./requirements/nginx/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf:ro
       - ./requirements/nginx/conf/certs/craimond.42.fr.crt:/etc/ssl/certs/craimond.42.fr.crt:ro
       - ./requirements/nginx/conf/private/craimond.42.fr.key:/etc/ssl/private/craimond.42.fr.key:ro
+      - wordpress_data:/var/www/html/wordpress
+    depends_on: #define the dependencies of the container
+      - wordpress
 
   mariadb:
     build: 
@@ -46,10 +48,24 @@ services:
     volumes:
       - ./requirements/wordpress/conf/wp-config.php:/var/www/html/wordpress/wp-config.php:ro
       - wordpress_data:/var/www/html/wordpress
+    depends_on:
+      - mariadb
 
 volumes:
   wordpress_data:
+    name: wordpress_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
   mariadb_data:
+    name: mariadb_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/mariadb
 
 networks:
   webnet:
