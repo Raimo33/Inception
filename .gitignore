@@ -1,1 +1,1 @@
-srcs/requirements/nginx/conf/private/*.key
+srcs/requirements/nginx/conf/private/*
