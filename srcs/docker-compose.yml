@@ -29,7 +29,7 @@ services:
     env_file:
       - .env
     volumes:
-      # - wordpress_data: TODO : connect nginx with the wordpress volume
+      - wordpress_data:/var/www/html:ro
       - ./srcs/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./srcs/nginx/conf/ssl:/etc/ssl:ro
     ports:
