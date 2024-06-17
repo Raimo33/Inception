@@ -1,5 +1,3 @@
-BUILD_DIR = ./requirements
-DOCKER_CONTAINERS = nginx wordpress mariadb
 DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
 
 all: up
@@ -19,4 +17,4 @@ restart: ## Restart all services
 logs: ## View output from containers
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
-.PHONY: all up down build restart logs clean rebuild
+.PHONY: all up down build restart logs
