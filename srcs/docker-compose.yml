@@ -5,6 +5,7 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
+    container_name: mariadb_container
     env_file:
       - .env
     environment:
@@ -14,18 +15,21 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     volumes:
-      - mariadb_data:/var/lib/mysql:rw
+      - database:/var/lib/mysql:rw
     ports:
       - "3306:3306"
     networks:
       - backend
+    restart: always
   nginx:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    container_name: nginx_container
     env_file:
       - .env
     volumes:
+      # - wordpress_data: TODO : connect nginx with the wordpress volume
       - ./srcs/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./srcs/nginx/conf/ssl:/etc/ssl:ro
     ports:
@@ -33,14 +37,41 @@ services:
       - "80:80"
     networks:
       - backend
+    restart: always
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress_container
+    env_file:
+      - .env
+    environment:
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
+      WORDPRESS_DB_HOST: mariadb
+    volumes:
+      - wordpress_data:/var/www/html:rw
+    ports:
+      - "9000:9000"
+    networks:
+      - backend
+    restart: always
     
 volumes:
-  mariadb_data:
-    name: mariadb_data
+  database:
+    name: database
     driver: local
     driver_opts:
       type: none
       device: /home/${USER}/data/mariadb
+      o: bind
+  wordpress_data:
+    name: wordpress_data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/wordpress
       o: bind
 
 networks:
