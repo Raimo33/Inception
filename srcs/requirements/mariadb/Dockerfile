@@ -5,21 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/15 17:42:50 by craimond          #+#    #+#              #
-#    Updated: 2024/06/15 17:54:55 by craimond         ###   ########.fr        #
+#    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
+#    Updated: 2024/06/17 15:23:25 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FROM debian:buster
+FROM alpine:3.19
 
-RUN apt update && apt install -y mariadb-server
-
-EXPOSE 3306
+RUN apk add --no-cache mariadb mariadb-client gettext
 
 COPY ./tools/create_db.sql /tmp/create_db.sql
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./tools/init_db.sh /tmp/init_db.sh
 
-RUN service mysql start
-RUN mysql -u root < /tmp/create_db.sql && rm /tmp/create_db.sql
+RUN chmod +x /tmp/init_db.sh
+RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql --basedir=/usr
+RUN chown -R mysql:mysql /var/lib/mysql
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-CMD ["mysqld"]
+EXPOSE 3306
+
+CMD ["/tmp/init_db.sh"]
