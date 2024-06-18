@@ -1,32 +1,26 @@
-# Base image
-FROM debian:11.9
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Dockerfile                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
+#    Updated: 2024/06/17 18:40:33 by craimond         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    wget php7.4 php7.4-fpm php7.4-mysql mariadb-client tini
+FROM alpine:3.19
 
-# Download WordPress
-RUN wget https://github.com/WordPress/WordPress/archive/refs/tags/6.5.4.tar.gz -P /var/www
+RUN apk add --no-cache php php-fpm curl
+RUN mkdir -p /var/www && cd /var/www
+RUN curl -O https://wordpress.org/wordpress-6.5.4.tar.gz && tar -xvf wordpress-6.5.4.tar.gz && rm wordpress-6.5.4.tar.gz
 
-WORKDIR /var/www
+COPY ./conf/www.conf		/etc/php8/php-fpm.d/www.conf
+COPY ./conf/wp-config.php	/var/www/wordpress/wp-config.php
 
-# Extract the WordPress files
-RUN tar -xvf 6.5.4.tar.gz && rm 6.5.4.tar.gz
-
-# Change owner of the WordPress files (group:user)
-RUN chown -R root:root ./WordPress-6.5.4
-
-# Create the necessary directory for PHP-FPM
-RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
-
-# Configure PHP-FPM
-COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-
-# Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
-# Use tini as the init system for forwarding signals to the child processes
-ENTRYPOINT ["tini", "--"]
+WORKDIR /var/www/wordpress
 
-# Start PHP-FPM
-CMD ["php-fpm7.4", "-F"]
+CMD ["php-fpm82", "-F"]

@@ -5,34 +5,22 @@
 #                                                     +:+ +:+         +:+      #
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/06/13 15:12:45 by craimond          #+#    #+#              #
-#    Updated: 2024/06/15 13:59:50 by craimond         ###   ########.fr        #
+#    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
+#    Updated: 2024/06/17 15:49:50 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Base image
 FROM alpine:3.19
 
-# Install dependencies
-RUN apk update && \
-    apk add mariadb mariadb-client mariadb-server-utils bash tini
+RUN apk add --no-cache mariadb mariadb-client envsubst
 
-# Copy the MariaDB server configuration file
-COPY conf/50-server.conf /etc/mysql/mariadb.conf.d/50-server.conf
+COPY ./tools/* /tmp/
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Create a separate directory for running the bash script
-RUN mkdir -p /run/mysqld /var/lib/mysql && \
-    chown -R mysql:mysql /var/lib/mysql /run/mysqld
+RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql --basedir=/usr
+RUN chown -R mysql:mysql /var/lib/mysql
+RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
-# Copy the initialization script
-COPY tools/init_db.sh /run/mysqld/init_db.sh
-RUN chmod +x /run/mysqld/init_db.sh
-
-# Expose the port for MariaDB
 EXPOSE 3306
 
-# Use tini as the init system for forwarding signals to the child processes
-ENTRYPOINT ["/sbin/tini", "--"]
-
-# Run the MariaDB server with initialization
-CMD ["/run/mysqld/init_db.sh"]
+CMD ["sh", "/tmp/start.sh"]

@@ -1,28 +1,23 @@
-BUILD_DIR = ./requirements
-DOCKER_CONTAINERS = nginx wordpress mariadb
-DOCKER_COMPOSE = srcs/docker-compose.yml
+DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
 
 all: up
 
 up: ## Start all services
-	docker-compose -f $(DOCKER_COMPOSE) up -d
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
 
 down: ## Stop all services
-	docker-compose -f $(DOCKER_COMPOSE) down
+	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
 build: ## Build or rebuild services
-	docker-compose -f $(DOCKER_COMPOSE) build
+	docker-compose -f $(DOCKER_COMPOSE_PATH) build
+
+build-nocache: ## Build or rebuild services without cache
+	docker-compose -f $(DOCKER_COMPOSE_PATH) build --no-cache
 
 restart: ## Restart all services
-	docker-compose -f $(DOCKER_COMPOSE) restart
+	docker-compose -f $(DOCKER_COMPOSE_PATH) restart
 
 logs: ## View output from containers
-	docker-compose -f $(DOCKER_COMPOSE) logs -f
+	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
-clean: ## Remove all containers, networks, and volumes
-	docker-compose -f $(DOCKER_COMPOSE) down -v --rmi all --remove-orphans
-	docker volume prune -f
-
-rebuild: clean build up ## Clean, build, and start all services
-
-.PHONY: all up down build restart logs clean rebuild
+.PHONY: all up down build build-nocache restart rebuild logs
