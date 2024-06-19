@@ -1,9 +1,16 @@
 DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
 
-all: up
+all: init build up
+
+init: ## Initialize the project
+	mkdir -p /home/${USER}/data/wordpress /home/${USER}/data/mariadb
+	sudo chown -R 1000:1000 /home/${USER}/data/wordpress
+	sudo chown -R 1001:1001 /home/${USER}/data/mariadb
+	sudo chmod -R 755 /home/${USER}/data/wordpress
+	sudo chmod -R 755 /home/${USER}/data/mariadb
 
 up: ## Start all services
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up
 
 down: ## Stop all services
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down

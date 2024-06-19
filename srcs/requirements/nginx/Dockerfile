@@ -6,27 +6,26 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/06/19 13:05:57 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/19 15:08:04 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.19
 
-RUN apk add --no-cache nginx
-RUN addgroup -S webgroup && adduser -S webuser -G webgroup
+RUN apk add --no-cache nginx shadow
+RUN addgroup -S webgroup && adduser -S -G webgroup webuser
+RUN groupmod -g 1000 webgroup && usermod -u 1000 webuser
 
 COPY ./conf/nginx.conf	/etc/nginx/nginx.conf
 COPY ./conf/ssl/		/etc/ssl/
 
-RUN mkdir -p /var/log/nginx && mkdir -p /run/nginx
-RUN chown -R webuser:webgroup /var/lib/nginx
-RUN chown -R webuser:webgroup /var/log/nginx
-RUN chown -R webuser:webgroup /etc/ssl
-RUN chown -R webuser:webgroup /run/nginx
+RUN mkdir -p /var/log/nginx /run/nginx
+RUN chown -R webuser:webgroup /var/lib/nginx /var/log/nginx /etc/ssl /run/nginx
 RUN chmod -R 400 /etc/ssl
 
 EXPOSE 443 80
 
 USER webuser
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/usr/sbin/nginx"]
+CMD ["-g", "daemon off;"]

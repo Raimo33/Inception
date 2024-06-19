@@ -13,4 +13,3 @@ mysql -u root < create_user.sql
 mysqladmin -u root shutdown
 
 wait "$pid"
-exec /usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql
