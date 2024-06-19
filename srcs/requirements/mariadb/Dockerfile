@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/06/17 15:49:50 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/19 13:08:16 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,5 +22,7 @@ RUN chown -R mysql:mysql /var/lib/mysql
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 EXPOSE 3306
+
+USER mysql
 
 CMD ["sh", "/tmp/start.sh"]
