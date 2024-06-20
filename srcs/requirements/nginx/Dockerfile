@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/06/19 15:08:04 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/20 10:58:07 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ COPY ./conf/ssl/		/etc/ssl/
 RUN mkdir -p /var/log/nginx /run/nginx
 RUN chown -R webuser:webgroup /var/lib/nginx /var/log/nginx /etc/ssl /run/nginx
 RUN chmod -R 400 /etc/ssl
+#TODO fix 
 
 EXPOSE 443 80
 

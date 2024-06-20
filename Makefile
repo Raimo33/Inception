@@ -10,7 +10,7 @@ init: ## Initialize the project
 	sudo chmod -R 755 /home/${USER}/data/mariadb
 
 up: ## Start all services
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
 
 down: ## Stop all services
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
