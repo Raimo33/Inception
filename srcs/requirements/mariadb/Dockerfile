@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/06/19 15:21:35 by craimond         ###   ########.fr        #
+#    Updated: 2024/06/21 12:55:04 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RUN apk add --no-cache mariadb mariadb-client envsubst shadow
 COPY ./tools/* /tmp/
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-RUN groupmod -g 1001 mysql && usermod -u 1001 mysql
+RUN usermod -u 1001 mysql
 RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql --basedir=/usr
 
 RUN mkdir -p /run/mysqld
