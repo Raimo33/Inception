@@ -1,15 +1,15 @@
 DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
-WORDPRESS_DATA_DIR = /home/${USER}/data/wordpress
-MARIADB_DATA_DIR = /home/${USER}/data/mariadb
+DATA_DIR = /home/${USER}/data
 
 all: init build up
 
 init: ## Initialize the project
-	mkdir -p $(WORDPRESS_DATA_DIR) $(MARIADB_DATA_DIR)
-	sudo chown -R :1000 $(WORDPRESS_DATA_DIR)
-	sudo chown -R 1001 $(MARIADB_DATA_DIR)
-	sudo chmod -R 750 $(WORDPRESS_DATA_DIR)
-	sudo chmod -R 700 $(MARIADB_DATA_DIR)
+	mkdir -p $(DATA_DIR)
+	mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
+	sudo chown -R :1000 $(DATA_DIR)/wordpress
+	sudo chown -R 1001 $(DATA_DIR)/mariadb
+	sudo chmod -R 750 $(DATA_DIR)/wordpress
+	sudo chmod -R 700 $(DATA_DIR)/mariadb
 
 up: ## Start all services
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
@@ -30,7 +30,6 @@ logs: ## View output from containers
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
 fclean:
-	sudo rm -rf WORDPRESS_DATA_DIR
-	sudo rm -rf MARIADB_DATA_DIR
+	sudo rm -rf $(DATA_DIR)
 
 .PHONY: all up down build build-nocache restart rebuild logs
