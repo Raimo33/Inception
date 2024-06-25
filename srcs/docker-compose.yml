@@ -3,12 +3,12 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
+      args:
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_ADMIN=${DB_ADMIN}
     container_name: mariadb_container
-    environment:
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_ADMIN=${DB_ADMIN}
     user: "1001"
     volumes:
       - database:/var/lib/mysql:rw

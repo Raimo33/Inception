@@ -1,15 +1,17 @@
 #!/bin/sh
 
-/usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql --skip-networking &
-pid="$!"
+envsubst < create_db.template.sql > create_db.sql
+envsubst < create_user.template.sql > create_user.sql
 
-sleep 20
+/usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql &
 
-envsubst < create_db.sql > create_db.sql
-envsubst < create_user.sql > create_user.sql
-mysql -u root -p${DB_ROOT_PASSWORD} < create_db.sql
-mysql -u root -p${DB_ROOT_PASSWORD} < create_user.sql
+while ! mysqladmin ping --silent; do
+	sleep 1
+done
 
-mysqladmin -u root -p${DB_ROOT_PASSWORD} -h localhost shutdown
+mysql -u root < create_db.sql
+mysql -u root < create_user.sql
 
-wait "$pid"
+mysqladmin -u root -h localhost shutdown
+
+rm -rf *.sql

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: femorell <femorell@student.42.fr>          +#+  +:+       +#+         #
+#    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/06/21 18:03:02 by femorell         ###   ########.fr        #
+#    Updated: 2024/06/25 17:31:25 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,19 @@ FROM alpine:3.19
 
 RUN apk add --no-cache mariadb mariadb-client envsubst shadow
 
+ARG DB_NAME DB_USER DB_PASSWORD DB_ADMIN
+
 COPY ./tools/ /tmp/
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./conf/mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 RUN usermod -u 1001 mysql
-RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql --basedir=/usr
+RUN mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
-RUN mkdir -p /run/mysqld /var/log/mysql
-RUN chown -R mysql:mysql /var/lib/mysql /run/mysqld /var/log/mysql
+RUN mkdir -p /run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql /run/mysqld
 RUN chmod +x /tmp/init.sh
 
-RUN /tmp/init.sh
+RUN cd tmp && ./init.sh
 
 EXPOSE 3306
 

@@ -20,16 +20,16 @@ down: ## Stop all services
 build: ## Build or rebuild services
 	docker-compose -f $(DOCKER_COMPOSE_PATH) build
 
-build-nocache: fclean init## Build or rebuild services without cache
-	docker-compose -f $(DOCKER_COMPOSE_PATH) build --no-cache
-
 restart: ## Restart all services
 	docker-compose -f $(DOCKER_COMPOSE_PATH) restart
 
 logs: ## View output from containers
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
-fclean:
+fclean: down ## Stop all services and remove all volumes
+	sudo docker system prune --all --force --volumes
 	sudo rm -rf $(DATA_DIR)
+
+re: fclean init build
 
 .PHONY: all up down build build-nocache restart rebuild logs

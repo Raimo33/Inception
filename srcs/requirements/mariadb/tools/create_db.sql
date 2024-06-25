@@ -1,2 +1,0 @@
-CREATE DATABASE '${DB_NAME}';
-USE '${DB_NAME}';
