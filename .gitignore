@@ -1,2 +1,1 @@
-srcs/requirements/nginx/conf/ssl/private/
-srcs/requirements/ftp/conf/ssl/ftp.private/
+*.key
