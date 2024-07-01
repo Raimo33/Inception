@@ -30,6 +30,6 @@ fclean: down ## Stop all services and remove all volumes
 	sudo docker system prune --all --force --volumes
 	sudo rm -rf $(DATA_DIR)
 
-re: fclean init build
+re: fclean all
 
 .PHONY: all up down build build-nocache restart rebuild logs

@@ -1,6 +1,7 @@
 [server]
 
 [mysqld]
+bind-address = wordpress.backend
 
 [galera]
 bind-address = 0.0.0.0

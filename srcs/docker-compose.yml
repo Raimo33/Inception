@@ -6,9 +6,10 @@ services:
       args:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
-        - DB_ADMIN=${DB_ADMIN}
-    container_name: mariadb_container
+        - DB_USER_PASSWORD=${DB_USER_PASSWORD}
+        - DB_SUPERUSER=${DB_SUPERUSER}
+        - DB_SUPERUSER_PASSWORD=${DB_SUPERUSER_PASSWORD}
+    container_name: mariadb
     user: "1001"
     volumes:
       - database:/var/lib/mysql:rw
@@ -21,7 +22,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    container_name: nginx_container
+    container_name: nginx
     user: "1002"
     group_add:
       - "1000"
@@ -39,11 +40,11 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    container_name: wordpress_container
+    container_name: wordpress
     environment:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USER_PASSWORD=${DB_USER_PASSWORD}
       - DB_HOST=${DB_HOST}
     user: "1003"
     group_add:
@@ -61,7 +62,7 @@ services:
     build:
       context: ./requirements/ftp
       dockerfile: Dockerfile
-    container_name: ftp_container
+    container_name: ftp
     # environment:
     #   FTP_USER: ${FTP_USER}
     #   FTP_PASSWORD: ${FTP_PASSWORD}

@@ -6,13 +6,16 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/06/25 14:10:30 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/01 16:38:59 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.19
 
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml curl shadow
+
+
+#TODO in www.conf listen = nginx:9000
 
 WORKDIR /var/www/html
 
