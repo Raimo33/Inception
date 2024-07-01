@@ -6,31 +6,34 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/01 16:38:59 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/01 16:57:59 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.19
 
-RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml curl shadow
-
+SHELL ["/bin/ash", "-c"]
 
 #TODO in www.conf listen = nginx:9000
 
-WORKDIR /var/www/html
-
-RUN curl -o wordpress-6.5.4.tar.gz https://wordpress.org/wordpress-6.5.4.tar.gz && tar -xvf wordpress-6.5.4.tar.gz && rm wordpress-6.5.4.tar.gz
-
-RUN addgroup -g 1000 webgroup && adduser -S -G webgroup -u 1003 wp-user
+RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml curl
+ADD https://wordpress.org/latest.tar.gz /var/www/html/
+RUN curl -o /tmp/wp-keys-salts api.wordpress.org/secret-key/1.1/salt/
 
 COPY ./conf/www.conf		/etc/php8/php-fpm.d/www.conf
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
-COPY ./conf/wp-config.php	./wordpress/wp-config.php
+COPY ./conf/wp-config.php	/var/www/html/wordpress/wp-config.php
 
+RUN cat /tmp/wp-keys-salts >> /var/www/html/wordpress/wp-config.php
+
+RUN addgroup -g 1000 webgroup && adduser -S -G webgroup -u 1003 wp-user
 RUN chown -R wp-user:webgroup /var/log/php82
 
+USER wp-user:webgroup
+WORKDIR /var/www/html/wordpress
 EXPOSE 9000
-USER wp-user
 
 ENTRYPOINT ["/usr/sbin/php-fpm82"]
 CMD ["-F"]
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -f http://localhost:9000/fpm-ping || exit 1
