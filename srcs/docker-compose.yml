@@ -22,7 +22,7 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
-    container_name: nginx_container
+    container_name: nginx
     user: "1002:1000"
     volumes:
       - wordpress_data:/var/www/html/wordpress:ro
@@ -39,7 +39,7 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    container_name: wordpress_container
+    container_name: wordpress
     user: "1003:1000"
     environment:
       - DB_NAME=${DB_NAME}
@@ -59,7 +59,7 @@ services:
     build:
       context: ./requirements/ftp
       dockerfile: Dockerfile
-    container_name: ftp_container
+    container_name: ftp
     user: "1004"
     # environment:
     #   FTP_USER: ${FTP_USER}
