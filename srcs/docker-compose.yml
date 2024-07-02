@@ -12,7 +12,7 @@ services:
     container_name: mariadb
     user: "1001"
     volumes:
-      - database:/var/lib/mysql:rw
+      - database:/var/lib/mysql
     ports:
       - "3306:3306"
     networks:
@@ -25,7 +25,7 @@ services:
     container_name: nginx
     user: "1002:1000"
     volumes:
-      - wordpress_data:/var/www/html/wordpress:rw
+      - wordpress_data:/var/www/html/wordpress
       - ./requirements/nginx/conf/ssl:/etc/ssl:ro
     ports:
       - "443:443"
@@ -47,7 +47,7 @@ services:
       - DB_USER_PASSWORD=${DB_USER_PASSWORD}
       - DB_HOST=${DB_HOST}
     volumes:
-      - wordpress_data:/var/www/html/wordpress:rw
+      - wordpress_data:/var/www/html/wordpress
     ports:
       - "9000:9000"
     networks:
@@ -65,7 +65,7 @@ services:
     #   FTP_USER: ${FTP_USER}
     #   FTP_PASSWORD: ${FTP_PASSWORD}
     volumes:
-      - wordpress_data:/var/www/html/wordpress:rw
+      - wordpress_data:/var/www/html/wordpress
       - ./requirements/ftp/conf/ssl:/etc/ssl:ro
     ports:
       - "21:21"

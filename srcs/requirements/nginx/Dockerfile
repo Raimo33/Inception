@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/07/02 13:27:44 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/02 14:22:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RUN apk add --no-cache nginx
 
 COPY ./conf/nginx.conf	/etc/nginx/nginx.conf
 
-RUN addgroup -g 1000 -S webgroup && adduser -u 1002 -D -S -G webgroup nginx-user
+RUN addgroup -g 1000 -S webgroup && adduser -u 1002 -G webgroup -SD nginx-user
 
 RUN mkdir -p /var/log/nginx /run/nginx
 RUN chown -R nginx-user:webgroup /var/lib/nginx /var/log/nginx /etc/ssl /run/nginx

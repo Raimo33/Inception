@@ -3,7 +3,7 @@ DATA_DIR = /home/${USER}/data
 
 all: init build up
 
-init: ## Initialize the project
+init:
 	mkdir -p $(DATA_DIR)
 	mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
 	sudo chown -R :1000 $(DATA_DIR)/wordpress
@@ -11,22 +11,22 @@ init: ## Initialize the project
 	sudo chmod -R 774 $(DATA_DIR)/wordpress
 	sudo chmod -R 700 $(DATA_DIR)/mariadb
 
-up: ## Start all services
+up:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
 
-down: ## Stop all services
+down:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
-build: ## Build or rebuild services
+build:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) build
 
-restart: ## Restart all services
+restart:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) restart
 
-logs: ## View output from containers
+logs:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
-fclean: down ## Stop all services and remove all volumes
+fclean: down
 	sudo docker system prune --all --force --volumes
 	sudo rm -rf $(DATA_DIR)
 

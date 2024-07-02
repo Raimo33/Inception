@@ -4,10 +4,11 @@
 bind-address = wordpress.backend
 
 [galera]
-bind-address = 0.0.0.0
+bind-address = wordpress.backend
 
 [embedded]
 
 [mariadb]
+bind-address = wordpress.backend
 
 [mariadb-10.5]
