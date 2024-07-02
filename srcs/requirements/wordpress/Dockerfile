@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/01 16:57:59 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/02 12:34:38 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SHELL ["/bin/ash", "-c"]
 #TODO in www.conf listen = nginx:9000
 
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml curl
-ADD https://wordpress.org/latest.tar.gz /var/www/html/
+ADD https://wordpress.org/wordpress-6.5.5.tar.gz /var/www/html/
+RUN rm -rf /var/www/html/wordpress-6.5.5.tar.gz
 RUN curl -o /tmp/wp-keys-salts api.wordpress.org/secret-key/1.1/salt/
 
 COPY ./conf/www.conf		/etc/php8/php-fpm.d/www.conf
