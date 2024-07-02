@@ -8,7 +8,7 @@ init: ## Initialize the project
 	mkdir -p $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
 	sudo chown -R :1000 $(DATA_DIR)/wordpress
 	sudo chown -R 1001 $(DATA_DIR)/mariadb
-	sudo chmod -R 750 $(DATA_DIR)/wordpress
+	sudo chmod -R 774 $(DATA_DIR)/wordpress
 	sudo chmod -R 700 $(DATA_DIR)/mariadb
 
 up: ## Start all services

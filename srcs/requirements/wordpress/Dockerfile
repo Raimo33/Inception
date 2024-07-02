@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/02 12:34:38 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/02 13:26:01 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ COPY ./conf/wp-config.php	/var/www/html/wordpress/wp-config.php
 
 RUN cat /tmp/wp-keys-salts >> /var/www/html/wordpress/wp-config.php
 
-RUN addgroup -g 1000 webgroup && adduser -S -G webgroup -u 1003 wp-user
+RUN addgroup -g 1000 -S webgroup && adduser -u 1003 -D -S -G webgroup wp-user
 RUN chown -R wp-user:webgroup /var/log/php82
 
 USER wp-user:webgroup

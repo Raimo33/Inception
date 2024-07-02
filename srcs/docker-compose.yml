@@ -25,7 +25,7 @@ services:
     container_name: nginx
     user: "1002:1000"
     volumes:
-      - wordpress_data:/var/www/html/wordpress:ro
+      - wordpress_data:/var/www/html/wordpress:rw
       - ./requirements/nginx/conf/ssl:/etc/ssl:ro
     ports:
       - "443:443"
