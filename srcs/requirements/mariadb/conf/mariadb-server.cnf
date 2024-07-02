@@ -1,14 +1,14 @@
 [server]
 
 [mysqld]
-bind-address = wordpress.backend
+bind-address = mariadb.backend
+port=3306
+skip-networking = 0
 
 [galera]
-bind-address = wordpress.backend
 
 [embedded]
 
 [mariadb]
-bind-address = wordpress.backend
 
 [mariadb-10.5]
