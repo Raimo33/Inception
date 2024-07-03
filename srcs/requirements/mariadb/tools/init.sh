@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/ash
 
-envsubst < create_db.template.sql > create_db.sql
-envsubst < create_user.template.sql > create_user.sql
+cd /tmp
 
 /usr/bin/mysqld --user=mysql --datadir=/var/lib/mysql &
 
@@ -15,3 +14,5 @@ mysql -u root < create_user.sql
 mysqladmin -u root -h localhost shutdown
 
 rm -rf *.sql
+
+exec "$@"

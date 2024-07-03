@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/02 15:16:51 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/03 18:51:25 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,12 @@ RUN cat /tmp/wp-keys-salts >> wordpress/wp-config.php
 RUN addgroup -g 1000 -S webgroup && adduser -u 1003 -G webgroup -SD wp-user
 RUN chown -R wp-user:webgroup /var/log/php82
 
-#TODO debug remove
-RUN apk add --no-cache mariadb mariadb-client
+#TODO remove debug
+RUN apk add --no-cache vim mariadb-client
 
 USER wp-user:webgroup
 EXPOSE 9000
 
-ENTRYPOINT ["/usr/sbin/php-fpm82"]
-CMD ["-F"]
+CMD ["/usr/sbin/php-fpm82", "-F"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -f http://localhost:9000/fpm-ping || exit 1

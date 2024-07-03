@@ -2,7 +2,7 @@
 
 [mysqld]
 bind-address = mariadb.backend
-port=3306
+port = 3306
 skip-networking = 0
 
 [galera]
