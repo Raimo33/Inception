@@ -6,15 +6,15 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/03 18:51:25 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/04 13:12:36 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#TODO incorporare il sito, mettere il logo e altri asset in mariadb forse
 
 FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
-
-#TODO in www.conf listen = nginx:9000
 
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml curl
 
