@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/04 13:12:36 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/05 16:38:29 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,13 +27,10 @@ COPY ./conf/www.conf		/etc/php8/php-fpm.d/www.conf
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
 COPY ./conf/wp-config.php	wordpress/wp-config.php
 
-RUN cat /tmp/wp-keys-salts >> wordpress/wp-config.php
+RUN cat /tmp/wp-keys-salts >> wordpress/wp-config.php && rm -rf /tmp/wp-keys-salts
 
 RUN addgroup -g 1000 -S webgroup && adduser -u 1003 -G webgroup -SD wp-user
 RUN chown -R wp-user:webgroup /var/log/php82
-
-#TODO remove debug
-RUN apk add --no-cache vim mariadb-client
 
 USER wp-user:webgroup
 EXPOSE 9000
