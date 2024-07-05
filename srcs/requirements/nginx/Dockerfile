@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/07/03 14:31:11 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/05 17:05:11 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RUN mkdir -p /var/log/nginx /run/nginx
 RUN chown -R nginx-user:webgroup /var/lib/nginx /var/log/nginx /etc/ssl /run/nginx
 RUN chmod -R 744 /etc/ssl
 
-EXPOSE 443 80
+EXPOSE 443
 
 USER nginx-user:webgroup
 

@@ -27,7 +27,6 @@ services:
       - ./requirements/nginx/conf/ssl:/etc/ssl:ro
     ports:
       - "443:443"
-      - "80:80"
     networks:
       - backend
     restart: always
