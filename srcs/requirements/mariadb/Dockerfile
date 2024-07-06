@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/05 14:50:54 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/06 16:19:53 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SHELL ["/bin/ash", "-c"]
 
 RUN apk add --no-cache mariadb mariadb-client envsubst shadow
 
-ARG DB_NAME DB_USER DB_USER_PASSWORD DB_SUPERUSER DB_SUPERUSER_PASSWORD
+ARG DB_NAME DB_USER DB_PASSWORD DB_SUPERUSER DB_SUPERUSER_PASSWORD
 
 COPY ./tools/						/run
 COPY ./conf/mariadb-server.cnf		/etc/my.cnf.d/mariadb-server.cnf
