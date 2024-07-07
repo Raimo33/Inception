@@ -1,7 +1,5 @@
 #!/bin/ash
 
-#TODO aspettare mariadb
-
 if ! wp core is-installed; then
 
 	wp core install --skip-email \
