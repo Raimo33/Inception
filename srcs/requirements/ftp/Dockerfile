@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/21 12:37:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/03 14:31:32 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/07 14:53:04 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ RUN apk add --no-cache vsftpd
 RUN adduser -u 1004 -S ftp-user
 
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
+COPY ./conf/ssl			/etc/ssl
+
+RUN chmod -R 744 /etc/ssl
 
 EXPOSE 21
 USER ftp-user

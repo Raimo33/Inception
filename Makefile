@@ -27,7 +27,7 @@ logs:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
 fclean: down
-	sudo docker system prune --all --force --volumes
+	docker system prune --all --force --volumes
 	sudo rm -rf $(DATA_DIR)
 
 re: fclean all
