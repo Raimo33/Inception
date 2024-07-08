@@ -5,11 +5,11 @@ DOMAIN_NAME = craimond.42.fr
 DEPS = docker-compose hostsed openssl ca-certificates
 
 NGINX_SSL = srcs/requirements/nginx/conf/ssl
-FTP_SSL = srcs/requirements/ftp/conf/ssl
+FTP_SSL = srcs/requirements/pure-ftp/conf/ssl
 NGINX_CERT = $(NGINX_SSL)/certs/$(DOMAIN_NAME).crt
 NGINX_KEY = $(NGINX_SSL)/private/$(DOMAIN_NAME).key
-FTP_CERT = $(FTP_SSL)/certs/vsftpd.crt
-FTP_KEY = $(FTP_SSL)/private/vsftpd.key
+FTP_CERT = $(FTP_SSL)/certs/pure-ftp.crt
+FTP_KEY = $(FTP_SSL)/private/pure-ftp.key
 CERTS_SUBJ = "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR = /usr/local/share/ca-certificates/
 
@@ -37,7 +37,7 @@ init:
 	sudo cp $(NGINX_CERT) $(LOCAL_CERTS_DIR)
 	echo "created ssl certificates"
 	sudo update-ca-certificates > /dev/null 2>&1
-	echo "added ssl certificates to trusted"
+	echo "added ssl certificates to trusted list"
 
 up:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d

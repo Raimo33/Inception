@@ -14,6 +14,12 @@ if ! wp core is-installed; then
 		$WP_USER_EMAIL \
 		--role=author \
 		--user_pass=$WP_USER_PASSWORD
+	
+	wp plugin install redis-cache --activate
+
+	wp config set WP_REDIS_HOST '$REDIS_HOST' --type=constant
+	wp config set WP_CACHE true --type=constant
+
 fi
 
 exec "$@"

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 13:59:24 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/08 17:31:29 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ RUN ./init_db.sh
 COPY ./conf/mariadb-server_run.cnf		/etc/my.cnf.d/mariadb-server.cnf
 
 WORKDIR /var/lib/mysql
-EXPOSE 3306
 USER mysql
+EXPOSE 3306
 
 ENTRYPOINT ["tini", "--"]
 CMD ["/usr/bin/mysqld", "--datadir=/var/lib/mysql"]
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD mysqladmin ping || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["mysqladmin", "ping"]

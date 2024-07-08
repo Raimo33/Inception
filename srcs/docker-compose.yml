@@ -15,6 +15,7 @@ services:
     networks:
       - backend
     restart: always
+
   nginx:
     build:
       context: ./requirements/nginx
@@ -29,6 +30,7 @@ services:
     restart: always
     depends_on:
       - wordpress
+
   wordpress:
     build:
       context: ./requirements/wordpress
@@ -56,21 +58,35 @@ services:
     restart: always
     depends_on:
       - mariadb
-  # ftp:
-  #   build:
-  #     context: ./requirements/ftp
-  #     dockerfile: Dockerfile
-  #   container_name: ftp
-  #   volumes:
-  #     - wordpress_data:/var/www/html/wordpress
-  #   ports:
-  #     - "21:21"
-  #     - "21000-21010:21000-21010"
-  #   networks:
-  #     - backend
-  #   restart: always
-  #   depends_on:
-  #     - wordpress
+
+  redis:
+    build:
+      context: ./requirements/redis
+      dockerfile: Dockerfile
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - wordpress
+
+  pure-ftp:
+    build:
+      context: ./requirements/pure-ftp
+      dockerfile: Dockerfile
+    container_name: pure-ftp
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - wordpress
     
 volumes:
   database:
