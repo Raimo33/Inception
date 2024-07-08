@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 01:20:49 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/08 15:55:36 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SHELL ["/bin/ash", "-c"]
 
 ARG DB_NAME DB_USER DB_PASSWORD DB_HOST
 
-RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar tini
+RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar tini curl
 ADD https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
 
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
@@ -33,7 +33,7 @@ USER wp-user:webgroup
 EXPOSE 9000
 
 WORKDIR /var/www/html/wordpress
-VOLUME /var/www/html/wordpressmake
+VOLUME /var/www/html/wordpress
 
 RUN /tmp/install_wp.sh
 RUN rm -rf /tmp/*
@@ -41,5 +41,4 @@ RUN rm -rf /tmp/*
 ENTRYPOINT ["tini", "--", "/run/setup_wp.sh"]
 CMD ["php-fpm82", "-F"]
 
-#TODO fix unhealthiness
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -f http://localhost:9000/fpm-ping || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -fk http://wordpress.backend:9000/fpm-ping || exit 1

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 00:45:06 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/08 13:59:24 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ RUN apk add --no-cache mariadb mariadb-client envsubst shadow tini
 
 ARG DB_NAME DB_USER DB_PASSWORD
 
-COPY ./tools/							/tmp/
+COPY ./tools/							/tmp
 COPY ./conf/mariadb-server_build.cnf	/etc/my.cnf.d/mariadb-server.cnf
 
 RUN usermod -u 1001 mysql
