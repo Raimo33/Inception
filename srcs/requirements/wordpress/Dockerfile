@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 17:37:55 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/08 23:08:35 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG DB_NAME DB_USER DB_PASSWORD DB_HOST
+ARG DB_NAME DB_USER DB_PASSWORD
 
-RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer tini curl
+RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer tini curl mariadb-client
 ADD https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
 
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf

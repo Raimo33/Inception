@@ -5,16 +5,16 @@ DOMAIN_NAME = craimond.42.fr
 DEPS = docker-compose hostsed openssl ca-certificates
 
 NGINX_SSL = srcs/requirements/nginx/conf/ssl
-FTP_SSL = srcs/requirements/pure-ftp/conf/ssl
+FTP_SSL = srcs/requirements/vsftpd/conf/ssl
 NGINX_CERT = $(NGINX_SSL)/certs/$(DOMAIN_NAME).crt
 NGINX_KEY = $(NGINX_SSL)/private/$(DOMAIN_NAME).key
-FTP_CERT = $(FTP_SSL)/certs/pure-ftp.crt
-FTP_KEY = $(FTP_SSL)/private/pure-ftp.key
+FTP_CERT = $(FTP_SSL)/certs/vsftpd.crt
+FTP_KEY = $(FTP_SSL)/private/vsftpd.key
 CERTS_SUBJ = "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR = /usr/local/share/ca-certificates/
 
 
-all: deps init build up
+all: deps init build down up
 
 deps:
 	echo "installing $(DEPS)"
@@ -66,5 +66,4 @@ fclean: down
 re: fclean all
 
 .PHONY:
-.IGNORE: deps fclean
 .SILENT:

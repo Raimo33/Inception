@@ -39,9 +39,9 @@ services:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
-        - DB_HOST=${DB_HOST}
     container_name: wordpress
     environment:
+      - DB_HOST=${DB_HOST}
       - WP_URL=${WP_URL}
       - WP_USER=${WP_USER}
       - WP_USER_PASSWORD=${WP_USER_PASSWORD}
@@ -72,16 +72,16 @@ services:
     depends_on:
       - wordpress
 
-  pure-ftp:
+  vsftpd:
     build:
-      context: ./requirements/pure-ftp
+      context: ./requirements/vsftpd
       dockerfile: Dockerfile
-    container_name: pure-ftp
+    container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
     ports:
       - "21:21"
-      - "30000-30009:30000-30009"
+      - "21000-21010:21000-21010"
     networks:
       - backend
     restart: always
