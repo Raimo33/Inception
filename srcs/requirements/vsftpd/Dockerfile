@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: egualand <egualand@student.42firenze.it    +#+  +:+       +#+         #
+#    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 17:50:12 by egualand         ###   ########.fr        #
+#    Updated: 2024/07/09 18:28:09 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,8 @@ RUN chmod -R 755 /etc/ssl
 USER ftp-user:webgroup
 EXPOSE 21 21000-21010 20
 
-# ENTRYPOINT ["tini", "--"]
-# CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tini", "--"]
+CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
+#TODO better healthcheck with ftp client
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fi", "ftp://localhost:21"]
