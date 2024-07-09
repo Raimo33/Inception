@@ -1,6 +1,6 @@
 #!/bin/ash
 
-while ! mariadb-admin ping -h"$DB_HOST" --silent; do
+while ! mariadb-admin ping -h $DB_HOST --silent; do
 	sleep 1
 done
 
