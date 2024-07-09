@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 18:28:09 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/09 21:19:50 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ ARG USER_ID GROUP_ID
 COPY ./conf/ssl			/etc/ssl
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
 
-RUN apk add --no-cache vsftpd tini curl
+RUN apk add --no-cache vsftpd tini curl 
+
+RUN mkdir -p /var/log/vsftpd /var/run/vsftpd && touch /var/log/vsftpd.log
 
 RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD ftp-user
-RUN chown -R ftp-user /etc/vsftpd
+RUN chown -R ftp-user /etc/vsftpd /var/log/vsftpd /var/log/vsftpd.log /var/run/vsftpd
 RUN chmod -R 755 /etc/ssl
 
 USER ftp-user:webgroup
@@ -31,5 +33,5 @@ EXPOSE 21 21000-21010 20
 ENTRYPOINT ["tini", "--"]
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
-#TODO better healthcheck with ftp client
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fi", "ftp://localhost:21"]
+#TODO fix curl: (56) response reading failed (errno: 115)
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fi", "ftp://vsftpd.backend:21"]
