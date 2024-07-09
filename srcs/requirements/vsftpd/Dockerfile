@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
+#    By: egualand <egualand@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 12:15:17 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/09 17:50:12 by egualand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,14 @@ COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
 RUN apk add --no-cache vsftpd tini curl
 
 RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD ftp-user
-RUN chmod -R 744 /etc/ssl
+RUN chown -R ftp-user /etc/vsftpd
+RUN chmod -R 755 /etc/ssl
 
 USER ftp-user:webgroup
 EXPOSE 21 21000-21010 20
 
-ENTRYPOINT ["tini", "--"]
-CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+# ENTRYPOINT ["tini", "--"]
+# CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
+CMD ["tail", "-f", "/dev/null"]
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fi", "ftp://localhost:21"]
