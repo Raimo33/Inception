@@ -6,13 +6,15 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 17:37:41 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/09 12:03:43 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
+
+ARG USER_ID GROUP_ID
 
 RUN apk add --no-cache nginx tini curl
 
@@ -21,7 +23,7 @@ COPY ./conf/ssl				/etc/ssl
 
 RUN mkdir -p /var/log/nginx /run/nginx
 
-RUN addgroup -g 1000 -S webgroup && adduser -u 1002 -G webgroup -SD nginx-user
+RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD nginx-user
 RUN chown -R nginx-user:webgroup /var/lib/nginx /var/log/nginx /etc/ssl /run/nginx /etc/nginx/http.d
 RUN chmod -R 744 /etc/ssl
 

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 17:31:29 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/09 12:03:18 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,12 +16,12 @@ SHELL ["/bin/ash", "-c"]
 
 RUN apk add --no-cache mariadb mariadb-client envsubst shadow tini
 
-ARG DB_NAME DB_USER DB_PASSWORD
+ARG USER_ID DB_NAME DB_USER DB_PASSWORD
 
 COPY ./tools/							/tmp
 COPY ./conf/mariadb-server_build.cnf	/etc/my.cnf.d/mariadb-server.cnf
 
-RUN usermod -u 1001 mysql
+RUN usermod -u $USER_ID mysql
 RUN mariadb-install-db --datadir=/var/lib/mysql --user=mysql
 
 RUN mkdir -p /run/mysqld

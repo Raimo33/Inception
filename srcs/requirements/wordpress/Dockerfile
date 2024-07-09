@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/08 23:08:35 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/09 12:07:57 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG DB_NAME DB_USER DB_PASSWORD
+ARG USER_ID GROUP_ID DB_NAME DB_USER DB_PASSWORD DB_HOST
 
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer tini curl mariadb-client
 ADD https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
@@ -25,7 +25,7 @@ COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
 COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 COPY ./tools/install_wp.sh	/tmp/install_wp.sh
 
-RUN addgroup -g 1000 -S webgroup && adduser -u 1003 -G webgroup -SD wp-user
+RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD wp-user
 RUN chown -R wp-user:webgroup /var/log/php82 /usr/local/bin/wp /tmp/install_wp.sh
 RUN chmod +x /usr/local/bin/wp /tmp/install_wp.sh /run/setup_wp.sh
 

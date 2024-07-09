@@ -1,18 +1,24 @@
-DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
-DATA_DIR = /home/${USER}/data
-DOMAIN_NAME = craimond.42.fr
+DOCKER_COMPOSE_PATH	= srcs/docker-compose.yml
+DATA_DIR			= /home/${USER}/data
+DOMAIN_NAME			= craimond.42.fr
 
 DEPS = docker-compose hostsed openssl ca-certificates
 
-NGINX_SSL = srcs/requirements/nginx/conf/ssl
-FTP_SSL = srcs/requirements/vsftpd/conf/ssl
-NGINX_CERT = $(NGINX_SSL)/certs/$(DOMAIN_NAME).crt
-NGINX_KEY = $(NGINX_SSL)/private/$(DOMAIN_NAME).key
-FTP_CERT = $(FTP_SSL)/certs/vsftpd.crt
-FTP_KEY = $(FTP_SSL)/private/vsftpd.key
-CERTS_SUBJ = "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
-LOCAL_CERTS_DIR = /usr/local/share/ca-certificates/
+NGINX_SSL		= srcs/requirements/nginx/conf/ssl
+FTP_SSL			= srcs/requirements/vsftpd/conf/ssl
+NGINX_CERT		= $(NGINX_SSL)/certs/$(DOMAIN_NAME).crt
+NGINX_KEY		= $(NGINX_SSL)/private/$(DOMAIN_NAME).key
+FTP_CERT		= $(FTP_SSL)/certs/vsftpd.crt
+FTP_KEY			= $(FTP_SSL)/private/vsftpd.key
+CERTS_SUBJ		= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
+LOCAL_CERTS_DIR	= /usr/local/share/ca-certificates/
 
+WEBGROUP_GID	= 1000
+MYSQL_UID		= 1001
+NGINX_USER_UID	= 1002
+WP_USER_UID		= 1003
+REDIS_USER_UID	= 1004
+FTP_USER_UID	= 1005
 
 all: deps init build down up
 
@@ -24,8 +30,8 @@ deps:
 
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb
-	sudo chown -R :1000 $(DATA_DIR)/wordpress
-	sudo chown -R 1001 $(DATA_DIR)/mariadb
+	sudo chown -R :$(WEBGROUP_GID) $(DATA_DIR)/wordpress
+	sudo chown -R $(MYSQL_UID) $(DATA_DIR)/mariadb
 	sudo chmod -R 774 $(DATA_DIR)/wordpress
 	sudo chmod -R 700 $(DATA_DIR)/mariadb
 	echo "created volumes folders"
