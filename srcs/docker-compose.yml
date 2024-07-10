@@ -89,8 +89,6 @@ services:
         - USER_ID=${FTP_USER_UID}
         - GROUP_ID=${WEBGROUP_GID}
     container_name: vsftpd
-    environment:
-      - USER=${USER}
     volumes:
       - wordpress_data:/var/www/html/wordpress
     ports:
