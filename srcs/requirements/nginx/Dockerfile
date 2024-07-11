@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 18:24:35 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/11 12:29:19 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ ARG USER_ID GROUP_ID
 
 RUN apk add --no-cache nginx tini curl
 
-COPY ./conf/default.conf	/etc/nginx/http.d/default.conf
-COPY ./conf/ssl				/etc/ssl
+COPY ./conf/	/etc/nginx/http.d/
+COPY ./conf/ssl	/etc/ssl
 
 RUN mkdir -p /var/log/nginx /var/run/nginx
 

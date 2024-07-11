@@ -27,6 +27,7 @@ services:
     container_name: nginx
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - adminer_data:/var/www/html/adminer
     ports:
       - "443:443"
     networks:
@@ -108,6 +109,8 @@ services:
       args:
         - USER_ID=${ADMINER_USER_UID}
     container_name: adminer
+    volumes:
+      - adminer_data:/var/www/html/adminer
     ports:
       - "8080:8080"
     networks:
@@ -130,6 +133,13 @@ volumes:
     driver_opts:
       type: none
       device: /home/${USER}/data/wordpress
+      o: bind
+  adminer_data:
+    name: adminer_data
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/adminer
       o: bind
 
 networks:
