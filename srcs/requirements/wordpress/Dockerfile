@@ -6,11 +6,11 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 12:07:57 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/11 12:44:22 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#TODO incorporare il sito, mettere il logo e altri asset in mariadb forse
+#TODO RIFARE IL SITO CON HUGO/JEKYLL o altri static website generator
 
 FROM alpine:3.19
 
