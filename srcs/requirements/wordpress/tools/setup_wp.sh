@@ -1,5 +1,6 @@
 #!/bin/ash
 
+#TODO fix mariadb Access denied for user 'wp-user'@'wordpress.backend'
 while ! mariadb-admin ping -h $DB_HOST --silent; do
 	sleep 1
 done

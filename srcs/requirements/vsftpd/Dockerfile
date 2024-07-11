@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/10 12:22:13 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/11 10:50:18 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
 
 RUN apk add --no-cache vsftpd tini curl 
 
-RUN mkdir -p /var/log/vsftpd /var/run/vsftpd /home/vsftpd && touch /var/log/vsftpd.log
+RUN mkdir -p /var/log/vsftpd /var/run/vsftpd /home/vsftpd
 
 RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD ftp-user
-RUN chown -R ftp-user /etc/vsftpd /var/log/vsftpd /var/log/vsftpd.log /var/run/vsftpd /home/vsftpd
+RUN chown -R ftp-user /etc/vsftpd /var/log/vsftpd /var/run/vsftpd /home/vsftpd
 RUN chmod -R 755 /etc/ssl
 
 USER ftp-user:webgroup

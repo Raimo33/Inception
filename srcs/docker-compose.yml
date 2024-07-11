@@ -101,6 +101,21 @@ services:
     depends_on:
       - wordpress
 
+  adminer:
+    build:
+      context: ./requirements/adminer
+      dockerfile: Dockerfile
+      args:
+        - USER_ID=${ADMINER_USER_UID}
+    container_name: adminer
+    ports:
+      - "8080:8080"
+    networks:
+      - backend
+    restart: always
+    depends_on:
+      - mariadb
+
 volumes:
   database:
     name: database

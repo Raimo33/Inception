@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/09 12:03:18 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/11 11:33:49 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,4 +40,4 @@ EXPOSE 3306
 ENTRYPOINT ["tini", "--"]
 CMD ["/usr/bin/mysqld", "--datadir=/var/lib/mysql"]
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["mysqladmin", "ping"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["mariadb-admin", "ping"]
