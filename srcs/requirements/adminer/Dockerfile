@@ -29,6 +29,8 @@ EXPOSE 8080
 WORKDIR /var/www/html/adminer
 VOLUME /var/www/html/adminer
 
+#TODO fix Host 'adminer.backend' is not allowed to connect to this MariaDB server
+
 ENTRYPOINT ["tini", "--"]
 CMD ["php", "-S", "adminer.backend:8080", "-t", "/var/www/html/adminer"]
 
