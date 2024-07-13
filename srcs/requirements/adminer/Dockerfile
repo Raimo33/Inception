@@ -17,7 +17,7 @@ SHELL ["/bin/ash", "-c"]
 ARG USER_ID
 
 RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib tini curl
-ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/index.php
+ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/adminer.php
 
 COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
 

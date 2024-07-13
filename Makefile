@@ -39,7 +39,7 @@ init:
 	sudo chmod -R 755 $(DATA_DIR)/adminer
 	echo "created volumes folders"
 	sudo hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
-	echo "added domain $(DOMAIN_NAME) to hosts file"
+	echo "added DNS resolution for $(DOMAIN_NAME)"
 	mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
 	openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
 	openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
@@ -64,7 +64,7 @@ logs:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
 fclean: down
-	docker system prune --all --force --volumes
+	docker system prune --all --volumes
 	sudo hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "removed domain $(DOMAIN_NAME) from hosts file"
 	rm -rf $(NGINX_SSL) $(FTP_SSL)
