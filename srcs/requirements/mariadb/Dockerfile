@@ -37,7 +37,6 @@ WORKDIR /var/lib/mysql
 USER mysql
 EXPOSE 3306
 
-ENTRYPOINT ["tini", "--"]
 CMD ["/usr/bin/mysqld", "--datadir=/var/lib/mysql"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["mariadb-admin", "ping"]

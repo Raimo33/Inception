@@ -19,7 +19,7 @@ ARG USER_ID GROUP_ID
 COPY ./conf/ssl			/etc/ssl
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
 
-RUN apk add --no-cache vsftpd tini curl 
+RUN apk add --no-cache vsftpd curl
 
 RUN mkdir -p /var/log/vsftpd /var/run/vsftpd /home/vsftpd
 
@@ -31,7 +31,6 @@ USER ftp-user:webgroup
 EXPOSE 21 21000-21010 20
 WORKDIR /home/vsftpd/ftp-user
 
-ENTRYPOINT ["tini", "--"]
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
 #TODO fix curl: (56) response reading failed (errno: 115)

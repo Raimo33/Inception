@@ -16,7 +16,7 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID
 
-RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib tini curl
+RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib curl
 ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/adminer.php
 
 COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
@@ -31,7 +31,6 @@ VOLUME /var/www/html/adminer
 
 #TODO fix Host 'adminer.backend' is not allowed to connect to this MariaDB server
 
-ENTRYPOINT ["tini", "--"]
 CMD ["php", "-S", "adminer.backend:8080", "-t", "/var/www/html/adminer"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://adminer.backend:8080/fpm-ping"]

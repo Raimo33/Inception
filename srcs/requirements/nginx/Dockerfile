@@ -16,7 +16,7 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID GROUP_ID
 
-RUN apk add --no-cache nginx tini curl
+RUN apk add --no-cache nginx curl
 
 COPY ./conf/	/etc/nginx/http.d/
 COPY ./conf/ssl	/etc/ssl
@@ -28,9 +28,8 @@ RUN chown -R nginx-user:webgroup /var/lib/nginx /var/log/nginx /etc/nginx/http.d
 RUN chmod -R 755 /etc/ssl
 
 USER nginx-user:webgroup
-EXPOSE 443 
+EXPOSE 443
 
-ENTRYPOINT ["tini", "--"]
 CMD ["nginx", "-g", "daemon off;"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://nginx.backend:443"]
