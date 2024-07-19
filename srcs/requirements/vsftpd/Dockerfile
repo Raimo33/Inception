@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/07/11 10:50:18 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/19 10:06:07 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,14 @@ RUN apk add --no-cache vsftpd curl
 
 RUN mkdir -p /var/log/vsftpd /var/run/vsftpd /home/vsftpd
 
-RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD ftp-user
-RUN chown -R ftp-user /etc/vsftpd /var/log/vsftpd /var/run/vsftpd /home/vsftpd
+RUN addgroup -g $GROUP_ID -S wp-group && adduser -u $USER_ID -G wp-group -SD ftp-user
+RUN chown -R ftp-user:wp-group /etc/vsftpd /var/log/vsftpd /var/run/vsftpd /home/vsftpd
 RUN chmod -R 755 /etc/ssl
 
-USER ftp-user:webgroup
-EXPOSE 21 21000-21010 20
-WORKDIR /home/vsftpd/ftp-user
+USER	ftp-user:wp-group
+EXPOSE	21 21000-21010 20
+WORKDIR	/home/vsftpd/ftp-user
+VOLUME	/var/www/html/wordpress
 
 CMD ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 

@@ -24,7 +24,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${NGINX_USER_UID}
-        - GROUP_ID=${WEBGROUP_GID}
+        - GROUP_ID=${WP_GROUP_ID}
     container_name: nginx
     volumes:
       - wordpress_data:/var/www/html/wordpress
@@ -44,7 +44,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${WP_USER_UID}
-        - GROUP_ID=${WEBGROUP_GID}
+        - GROUP_ID=${WP_GROUP_ID}
         - DB_HOST=${DB_HOST}
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
@@ -92,7 +92,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${FTP_USER_UID}
-        - GROUP_ID=${WEBGROUP_GID}
+        - GROUP_ID=${WP_GROUP_ID}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress

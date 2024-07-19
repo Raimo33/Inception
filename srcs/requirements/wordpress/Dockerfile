@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/07/11 12:44:22 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/19 10:06:45 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,11 @@ COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
 COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 COPY ./tools/install_wp.sh	/tmp/install_wp.sh
 
-RUN addgroup -g $GROUP_ID -S webgroup && adduser -u $USER_ID -G webgroup -SD wp-user
-RUN chown -R wp-user:webgroup /var/log/php82 /usr/local/bin/wp /tmp/install_wp.sh
+RUN addgroup -g $GROUP_ID -S wp-group && adduser -u $USER_ID -G wp-group -SD wp-user
+RUN chown -R wp-user:wp-group /var/log/php82 /usr/local/bin/wp /tmp/install_wp.sh
 RUN chmod +x /usr/local/bin/wp /tmp/install_wp.sh /run/setup_wp.sh
 
-USER wp-user:webgroup
+USER wp-user:wp-group
 EXPOSE 9000
 
 WORKDIR /var/www/html/wordpress

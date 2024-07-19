@@ -13,7 +13,7 @@ FTP_KEY				= $(FTP_SSL)/private/vsftpd.key
 CERTS_SUBJ			= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR		= /usr/local/share/ca-certificates/
 
-WEBGROUP_GID		= 1000
+WP_GROUP_GID		= 1000
 MYSQL_UID			= 1001
 NGINX_USER_UID		= 1002
 WP_USER_UID			= 1003
@@ -31,12 +31,12 @@ deps:
 
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb $(DATA_DIR)/adminer
-	sudo chown -R :$(WEBGROUP_GID)     $(DATA_DIR)/wordpress
-	sudo chown -R $(MYSQL_UID)         $(DATA_DIR)/mariadb
-	sudo chown -R $(ADMINER_USER_UID)  $(DATA_DIR)/adminer
-	sudo chmod -R 774                  $(DATA_DIR)/wordpress
-	sudo chmod -R 700                  $(DATA_DIR)/mariadb
-	sudo chmod -R 755                  $(DATA_DIR)/adminer
+	sudo chown -R :$(WP_GROUP_GID)		$(DATA_DIR)/wordpress
+	sudo chown -R $(MYSQL_UID)			$(DATA_DIR)/mariadb
+	sudo chown -R $(ADMINER_USER_UID)	$(DATA_DIR)/adminer
+	sudo chmod -R 774					$(DATA_DIR)/wordpress
+	sudo chmod -R 700					$(DATA_DIR)/mariadb
+	sudo chmod -R 755					$(DATA_DIR)/adminer
 	echo "created volumes folders"
 	sudo hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
