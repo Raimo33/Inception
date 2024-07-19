@@ -18,8 +18,8 @@ ARG USER_ID GROUP_ID
 
 RUN apk add --no-cache nginx curl
 
-COPY ./conf/	/etc/nginx/http.d/
-COPY ./conf/ssl	/etc/ssl
+COPY ./conf/default.conf	/etc/nginx/http.d/
+COPY ./conf/ssl	            /etc/ssl
 
 RUN mkdir -p /var/log/nginx /var/run/nginx
 

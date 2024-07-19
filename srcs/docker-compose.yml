@@ -10,7 +10,7 @@ services:
         - USER_ID=${MYSQL_UID}
     container_name: mariadb
     volumes:
-      - database:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -126,8 +126,8 @@ services:
     init: true
 
 volumes:
-  database:
-    name: database
+  mariadb_data:
+    name: mariadb_data
     driver: local
     driver_opts:
       type: none

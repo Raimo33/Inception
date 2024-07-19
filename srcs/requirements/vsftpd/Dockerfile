@@ -16,8 +16,8 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID GROUP_ID
 
-COPY ./conf/ssl			/etc/ssl
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
+COPY ./conf/ssl			/etc/ssl
 
 RUN apk add --no-cache vsftpd curl
 
