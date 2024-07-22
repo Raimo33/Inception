@@ -41,4 +41,4 @@ RUN rm -rf /tmp/*
 ENTRYPOINT ["/run/setup_wp.sh"]
 CMD ["php-fpm82", "-F"]
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://wordpress.backend:9000/fpm-ping"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://wordpress.backend:9000"]

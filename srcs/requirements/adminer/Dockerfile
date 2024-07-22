@@ -30,8 +30,9 @@ EXPOSE 8080
 WORKDIR /var/www/html/adminer
 VOLUME /var/www/html/adminer
 
-#TODO fix Host 'adminer.backend' is not allowed to connect to this MariaDB server
+#TODO fix Access denied for user 'db-user'@'adminer.backend' to database 'wordpress_db' nella dashboard
+#Access denied for user 'db-user'@'adminer.backend' to database 'wordpress\_db'
 
 CMD ["php-fpm82", "-F"]
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://adminer.backend:8080/fpm-ping"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://adminer.backend:8080"]

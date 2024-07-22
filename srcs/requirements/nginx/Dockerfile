@@ -33,3 +33,5 @@ EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://nginx.backend:443"]
+
+#TODO fix nginx | 2024/07/22 10:51:53 [error] 9#9: *1 connect() failed (111: Connection refused) while connecting to upstream, client: 192.168.1.5, server: craimond.42.fr, request: "GET / HTTP/1.1", upstream: "fastcgi://192.168.1.4:9000", host: "nginx.backend"
