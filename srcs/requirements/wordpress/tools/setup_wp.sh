@@ -1,27 +1,29 @@
 #!/bin/ash
 
-while ! mariadb-admin ping -h $DB_HOST -u ping-user --silent; do
-	sleep 1
-done
+{
+	while ! mariadb-admin ping -h $DB_HOST -u ping-user --silent; do
+		sleep 1
+	done
 
-if ! wp core is-installed; then
+	if ! wp core is-installed; then
 
-	wp core install --skip-email \
-		--url=$WP_URL \
-		--title=$WP_TITLE \
-		--admin_user=$WP_SUPERUSER \
-		--admin_password=$WP_SUPERUSER_PASSWORD \
-		--admin_email=$WP_SUPERUSER_EMAIL
+		wp core install --skip-email \
+			--url=$WP_URL \
+			--title=$WP_TITLE \
+			--admin_user=$WP_SUPERUSER \
+			--admin_password=$WP_SUPERUSER_PASSWORD \
+			--admin_email=$WP_SUPERUSER_EMAIL
 
-	wp user create $WP_USER $WP_USER_EMAIL \
-		--role=author \
-		--user_pass=$WP_USER_PASSWORD
+		wp user create $WP_USER $WP_USER_EMAIL \
+			--role=author \
+			--user_pass=$WP_USER_PASSWORD
 
-	wp plugin install redis-cache --activate
+		wp plugin install redis-cache --activate
 
-	wp config set WP_REDIS_HOST '$REDIS_HOST' --type=constant
-	wp config set WP_CACHE true --type=constant
+		wp config set WP_REDIS_HOST '$REDIS_HOST' --type=constant
+		wp config set WP_CACHE true --type=constant
 
-fi
+	fi
+} > /var/log/setup.log 2>&1
 
 exec "$@"

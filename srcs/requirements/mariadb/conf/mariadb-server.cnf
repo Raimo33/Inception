@@ -5,6 +5,13 @@ bind-address = 0.0.0.0
 port = 3306
 skip-networking = 0
 
+general_log = 1
+slow_query_log = 1
+log_error = /var/log/mysql/mariadb_error.log
+general_log_file = /var/log/mysql/mariadb_query.log
+slow_query_log_file = /var/log/mysql/mariadb_slow_query.log
+log_bin = /var/log/mysql/mariadb_bin.log
+
 [galera]
 
 [embedded]

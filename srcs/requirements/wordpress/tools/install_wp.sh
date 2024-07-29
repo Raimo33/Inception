@@ -7,3 +7,5 @@ wp config create --skip-check \
 	--dbuser=$DB_USER \
 	--dbpass=$DB_PASSWORD \
 	--dbhost=$DB_HOST
+
+> /var/log/install.log 2>&1

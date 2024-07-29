@@ -1,5 +1,6 @@
 DOCKER_COMPOSE_PATH	= srcs/docker-compose.yml
 DATA_DIR			= /home/${USER}/data
+LOGS_DIR			= /home/${USER}/logs
 DOMAIN_NAME			= craimond.42.fr
 
 DEPS				= docker-compose hostsed openssl ca-certificates
@@ -13,6 +14,7 @@ FTP_KEY				= $(FTP_SSL)/private/vsftpd.key
 CERTS_SUBJ			= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR		= /usr/local/share/ca-certificates/
 
+#TODO mettere nell'ordine corretto
 WP_GROUP_GID		= 1000
 MYSQL_UID			= 1001
 NGINX_USER_UID		= 1002
@@ -31,12 +33,20 @@ deps:
 
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb $(DATA_DIR)/adminer
+	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/postfix
 	sudo chown -R :$(WP_GROUP_GID)		$(DATA_DIR)/wordpress
 	sudo chown -R $(MYSQL_UID)			$(DATA_DIR)/mariadb
 	sudo chown -R $(ADMINER_USER_UID)	$(DATA_DIR)/adminer
+	sudo chmod -R 755					$(DATA_DIR)
 	sudo chmod -R 774					$(DATA_DIR)/wordpress
-	sudo chmod -R 700					$(DATA_DIR)/mariadb
-	sudo chmod -R 755					$(DATA_DIR)/adminer
+	sudo chmod -R 755					$(LOGS_DIR)
+	sudo chown -R $(WP_USER_UID)		$(LOGS_DIR)/wordpress
+	sudo chown -R $(MYSQL_UID)			$(LOGS_DIR)/mariadb
+	sudo chown -R $(NGINX_USER_UID)		$(LOGS_DIR)/nginx
+	sudo chown -R $(FTP_USER_UID)		$(LOGS_DIR)/vsftpd
+	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/adminer
+	sudo chown -R $(REDIS_USER_UID)		$(LOGS_DIR)/redis
+	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/postfix
 	echo "created volumes folders"
 	sudo hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
@@ -70,6 +80,7 @@ fclean: down
 	rm -rf $(NGINX_SSL) $(FTP_SSL)
 	echo "removed ssl certificates"
 	sudo rm -rf $(DATA_DIR)
+	sudo rm -rf $(LOGS_DIR)
 	echo "removed volumes folders"
 
 re: fclean all

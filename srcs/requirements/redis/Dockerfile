@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/07/19 10:05:23 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/29 15:02:22 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ RUN adduser -u $USER_ID -DS redis-user
 
 USER redis-user
 EXPOSE 6379
+VOLUME /var/log
 
 CMD ["redis-server", "/etc/redis.conf"]
 

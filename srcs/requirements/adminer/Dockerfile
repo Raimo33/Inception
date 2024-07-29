@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/07/19 10:03:28 by craimond         ###   ########.fr        #
+#    Updated: 2024/07/29 14:59:17 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,12 @@ ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/htm
 COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 RUN adduser -u $USER_ID -SD adminer-user
-RUN chown -R $USER_ID /var/log/php82
 
 USER adminer-user
 EXPOSE 8080
-
 WORKDIR /var/www/html/adminer
-VOLUME /var/www/html/adminer
+VOLUME 	/var/www/html/adminer
+VOLUME 	/var/log
 
 CMD ["php-fpm82", "-F"]
 

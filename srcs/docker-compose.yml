@@ -1,3 +1,5 @@
+#TODO creare un container "logger" che non fa altro che leggere tutti i log e outputtarli con tail -f
+
 services:
   mariadb:
     build:
@@ -11,6 +13,7 @@ services:
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
+      - logs/mariadb:/var/log
     ports:
       - "3307:3306"
     networks:
@@ -29,6 +32,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - adminer_data:/var/www/html/adminer
+      - logs/nginx:/var/log
     ports:
       - "443:443"
     networks:
@@ -61,6 +65,7 @@ services:
       - WP_SUPERUSER_EMAIL=${WP_SUPERUSER_EMAIL}
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - logs/wordpress:/var/log
     ports:
       - "9000:9000"
     networks:
@@ -77,6 +82,8 @@ services:
       args:
         - USER_ID=${REDIS_USER_UID}
     container_name: redis
+    volumes:
+      - logs/redis:/var/log
     ports:
       - "6379:6379"
     networks:
@@ -96,6 +103,7 @@ services:
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - logs/vsftpd:/var/log
     ports:
       - "21:21"
       - "20:20"
@@ -116,6 +124,7 @@ services:
     container_name: adminer
     volumes:
       - adminer_data:/var/www/html/adminer
+      - logs/adminer:/var/log
     ports:
       - "8080:8080"
     networks:
@@ -146,6 +155,13 @@ volumes:
     driver_opts:
       type: none
       device: /home/${USER}/data/adminer
+      o: bind
+  logs:
+    name: logs
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/logs
       o: bind
 
 networks:
