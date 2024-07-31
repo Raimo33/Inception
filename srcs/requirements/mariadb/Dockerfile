@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/07/29 16:08:37 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/01 01:13:26 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,11 @@ COPY ./conf/mariadb-server.cnf	/etc/my.cnf.d/mariadb-server.cnf
 
 #TODO rimuovere l'utente mysql e crearne uno di nome mariadb_user
 RUN usermod -u $USER_ID mysql
+
 RUN mariadb-install-db --datadir=/var/lib/mysql --user=mysql
 
-RUN mkdir -p /run/mysqld
-RUN chown -R mysql /var/lib/mysql /run/mysqld /etc/my.cnf.d/mariadb-server.cnf
+RUN mkdir -p /run/mysqld /var/log/mysql
+RUN chown -R mysql /var/lib/mysql /var/log/mysql /run/mysqld /etc/my.cnf.d/
 RUN chmod +x /tmp/init_db.sh
 
 WORKDIR /tmp
@@ -35,7 +36,6 @@ RUN ./init_db.sh
 WORKDIR /var/lib/mysql
 USER mysql
 EXPOSE 3306
-VOLUME /var/log
 
 CMD ["/usr/bin/mysqld", "--datadir=/var/lib/mysql"]
 

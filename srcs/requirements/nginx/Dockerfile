@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/07/29 15:01:51 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/01 01:13:37 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,14 @@ RUN apk add --no-cache nginx curl
 COPY ./conf/default.conf	/etc/nginx/http.d/
 COPY ./conf/ssl				/etc/ssl
 
-RUN mkdir -p /var/run/nginx
-
 RUN addgroup -g $GROUP_ID -S wp-group && adduser -u $USER_ID -G wp-group -SD nginx-user
-RUN chown -R nginx-user:wp-group /var/lib/nginx /etc/nginx/http.d /var/run/nginx
+
+RUN mkdir -p /run/nginx /var/log/nginx
+RUN chown -R nginx-user:wp-group /var/lib/nginx /run/nginx /var/log/nginx /etc/nginx/http.d
 RUN chmod -R 755 /etc/ssl
 
 USER nginx-user:wp-group
 EXPOSE 443
-VOLUME /var/log
 
 CMD ["nginx", "-g", "daemon off;"]
 

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/07/29 15:02:22 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/01 01:36:02 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,13 @@ RUN apk add --no-cache redis tini
 
 COPY ./conf/redis.conf	/etc/redis.conf
 
+RUN touch /var/log/redis.log
+
 RUN adduser -u $USER_ID -DS redis-user
+RUN chown -R redis-user /var/log/redis.log
 
 USER redis-user
 EXPOSE 6379
-VOLUME /var/log
 
 CMD ["redis-server", "/etc/redis.conf"]
 

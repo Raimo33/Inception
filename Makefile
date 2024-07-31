@@ -31,6 +31,7 @@ deps:
 	sudo usermod -aG docker ${USER} > /dev/null 2>&1
 	echo "installed $(DEPS)"
 
+#TODO accorciare obrobrio
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb $(DATA_DIR)/adminer
 	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/postfix
