@@ -1,4 +1,4 @@
-#TODO creare un container "logger" (fluentd) che non fa altro che leggere tutti i log e outputtarli con tail -f
+#TODO tmpfs mounts per .key files
 
 services:
   mariadb:
@@ -13,6 +13,7 @@ services:
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
+      - /home/${USER}/logs/mariadb:/var/log
     ports:
       - "3307:3306"
     networks:
@@ -31,6 +32,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - adminer_data:/var/www/html/adminer
+      - /home/${USER}/logs/nginx:/var/log
     ports:
       - "443:443"
     networks:
@@ -63,6 +65,7 @@ services:
       - WP_SUPERUSER_EMAIL=${WP_SUPERUSER_EMAIL}
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - /home/${USER}/logs/wordpress:/var/log
     ports:
       - "9000:9000"
     networks:
@@ -79,6 +82,8 @@ services:
       args:
         - USER_ID=${REDIS_USER_UID}
     container_name: redis
+    volumes:
+      - /home/${USER}/logs/redis:/var/log
     ports:
       - "6379:6379"
     networks:
@@ -98,6 +103,7 @@ services:
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - /home/${USER}/logs/vsftpd:/var/log
     ports:
       - "21:21"
       - "20:20"
@@ -118,6 +124,7 @@ services:
     container_name: adminer
     volumes:
       - adminer_data:/var/www/html/adminer
+      - /home/${USER}/logs/adminer:/var/log
     ports:
       - "8080:8080"
     networks:
@@ -136,6 +143,7 @@ services:
   #   container_name: portfolio
   #   volumes:
   #     - wordpress_data:/var/www/html/wordpress
+  #     - /home/${USER}/logs/portfolio:/var/log
   #   ports:
   #     - "8081:8081"
   #   networks:
@@ -162,21 +170,21 @@ volumes:
     name: mariadb_data
     driver: local
     driver_opts:
-      type: none
+      type: bind
       device: /home/${USER}/data/mariadb
       o: bind
   wordpress_data:
     name: wordpress_data
     driver: local
     driver_opts:
-      type: none
+      type: bind
       device: /home/${USER}/data/wordpress
       o: bind
   adminer_data:
     name: adminer_data
     driver: local
     driver_opts:
-      type: none
+      type: bind
       device: /home/${USER}/data/adminer
       o: bind
 

@@ -7,9 +7,9 @@ skip-networking = 0
 
 general_log = 1
 slow_query_log = 1
-log_error = /var/log/mysql/mariadb_error.log
-general_log_file = /var/log/mysql/mariadb_query.log
-slow_query_log_file = /var/log/mysql/mariadb_slow_query.log
+log_error = /var/log/mysql/error.log
+general_log_file = /var/log/mysql/query.log
+slow_query_log_file = /var/log/mysql/slow_query.log
 
 [galera]
 

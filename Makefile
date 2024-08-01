@@ -22,6 +22,7 @@ WP_USER_UID			= 1003
 REDIS_USER_UID		= 1004
 FTP_USER_UID		= 1005
 ADMINER_USER_UID	= 1006
+PORTFOLIO_USER_UID	= 1007
 
 all: deps init build down up
 
@@ -34,7 +35,7 @@ deps:
 #TODO accorciare obrobrio
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb $(DATA_DIR)/adminer
-	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/postfix
+	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/postfix $(LOGS_DIR)/portfolio
 	sudo chown -R :$(WP_GROUP_GID)		$(DATA_DIR)/wordpress
 	sudo chown -R $(MYSQL_UID)			$(DATA_DIR)/mariadb
 	sudo chown -R $(ADMINER_USER_UID)	$(DATA_DIR)/adminer
@@ -48,6 +49,7 @@ init:
 	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/adminer
 	sudo chown -R $(REDIS_USER_UID)		$(LOGS_DIR)/redis
 	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/postfix
+	sudo chown -R $(PORTFOLIO_USER_UID)	$(LOGS_DIR)/portfolio
 	echo "created volumes folders"
 	sudo hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
