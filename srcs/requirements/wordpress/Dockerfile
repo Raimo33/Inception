@@ -6,11 +6,9 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/08/01 13:46:54 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/03 14:18:00 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#TODO RIFARE IL SITO CON HUGO/JEKYLL o altri static website generator
 
 FROM alpine:3.19
 
@@ -29,12 +27,12 @@ RUN wp config create --skip-check --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
 COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 
-RUN touch /var/log/setup.log /var/log/php82/error.log /var/log/php82/access.log
+RUN touch /var/log/setup.log /var/log/php82/access.log /var/log/php82/error.log
 
 RUN addgroup -g $GROUP_ID -S wp-group
 RUN adduser -u $USER_ID -G wp-group -SD wp-user
 RUN chown -R wp-user /usr/local/bin/wp /var/log/php82 /var/log/setup.log
-RUN chmod +x /usr/local/bin/wp /run/setup_wp.sh
+RUN chmod +x /run/setup_wp.sh
 
 USER wp-user:wp-group
 EXPOSE 9000

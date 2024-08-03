@@ -35,7 +35,7 @@ deps:
 #TODO accorciare obrobrio
 init:
 	mkdir -p $(DATA_DIR) $(DATA_DIR)/wordpress $(DATA_DIR)/mariadb $(DATA_DIR)/adminer
-	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/postfix $(LOGS_DIR)/portfolio
+	mkdir -p $(LOGS_DIR) $(LOGS_DIR)/wordpress $(LOGS_DIR)/mariadb $(LOGS_DIR)/nginx $(LOGS_DIR)/vsftpd $(LOGS_DIR)/adminer $(LOGS_DIR)/redis $(LOGS_DIR)/portfolio
 	sudo chown -R :$(WP_GROUP_GID)		$(DATA_DIR)/wordpress
 	sudo chown -R $(MYSQL_UID)			$(DATA_DIR)/mariadb
 	sudo chown -R $(ADMINER_USER_UID)	$(DATA_DIR)/adminer
@@ -48,7 +48,6 @@ init:
 	sudo chown -R $(FTP_USER_UID)		$(LOGS_DIR)/vsftpd
 	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/adminer
 	sudo chown -R $(REDIS_USER_UID)		$(LOGS_DIR)/redis
-	sudo chown -R $(ADMINER_USER_UID)	$(LOGS_DIR)/postfix
 	sudo chown -R $(PORTFOLIO_USER_UID)	$(LOGS_DIR)/portfolio
 	echo "created volumes folders"
 	sudo hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
@@ -76,7 +75,8 @@ restart:
 logs:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
 
-fclean: down
+fclean:
+	docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
 	docker system prune --all --volumes
 	sudo hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "removed domain $(DOMAIN_NAME) from hosts file"
