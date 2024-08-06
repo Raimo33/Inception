@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/08/06 02:49:01 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/06 13:38:33 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CERTS_SUBJ				= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR			= /usr/local/share/ca-certificates/
 
 WP_GROUP_GID			= 1000
-MYSQL_UID				= 1001
+MARIADB_USER_UID		= 1001
 NGINX_USER_UID			= 1002
 WP_USER_UID				= 1003
 REDIS_USER_UID			= 1004
@@ -62,6 +62,7 @@ init:
 	sudo openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
 	sudo openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
 	sudo cp $(NGINX_CERT) $(LOCAL_CERTS_DIR)
+	sudo cp $(FTP_CERT) $(LOCAL_CERTS_DIR)
 	echo "created ssl certificates"
 	sudo update-ca-certificates > /dev/null 2>&1
 	echo "added ssl certificates to trusted list"
@@ -89,7 +90,7 @@ fclean:
 	sudo rm -rf $(NGINX_SSL) $(FTP_SSL)
 	echo "removed ssl certificates"
 	sudo rm -rf $(DATA_DIR)
-	echo "removed volumes folders"
+	echo "removed data folders"
 
 re: fclean all
 

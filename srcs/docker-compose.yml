@@ -1,3 +1,5 @@
+#TODO capire se FTPD deve essere accessibile dalla porta 443 e da nginx
+
 services:
 
   mariadb:
@@ -8,7 +10,7 @@ services:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
         - DB_PASSWORD=${DB_PASSWORD}
-        - USER_ID=${MYSQL_UID}
+        - USER_ID=${MARIADB_USER_UID}
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
