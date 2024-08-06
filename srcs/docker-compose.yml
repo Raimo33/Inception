@@ -1,6 +1,5 @@
-#TODO tmpfs mounts per .key files
-
 services:
+
   mariadb:
     build:
       context: ./requirements/mariadb
@@ -13,7 +12,7 @@ services:
     container_name: mariadb
     volumes:
       - mariadb_data:/var/lib/mysql
-      - /home/${USER}/logs/mariadb:/var/log
+      - mariadb_logs:/var/log
     ports:
       - "3307:3306"
     networks:
@@ -32,7 +31,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - adminer_data:/var/www/html/adminer
-      - /home/${USER}/logs/nginx:/var/log
+      - nginx_logs:/var/log
     ports:
       - "443:443"
     networks:
@@ -65,7 +64,7 @@ services:
       - WP_SUPERUSER_EMAIL=${WP_SUPERUSER_EMAIL}
     volumes:
       - wordpress_data:/var/www/html/wordpress
-      - /home/${USER}/logs/wordpress:/var/log
+      - wordpress_logs:/var/log
     ports:
       - "9000:9000"
     networks:
@@ -83,7 +82,7 @@ services:
         - USER_ID=${REDIS_USER_UID}
     container_name: redis
     volumes:
-      - /home/${USER}/logs/redis:/var/log
+      - redis_logs:/var/log
     ports:
       - "6379:6379"
     networks:
@@ -103,7 +102,7 @@ services:
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
-      - /home/${USER}/logs/vsftpd:/var/log
+      - vsftpd_logs:/var/log
     ports:
       - "21:21"
       - "20:20"
@@ -124,7 +123,7 @@ services:
     container_name: adminer
     volumes:
       - adminer_data:/var/www/html/adminer
-      - /home/${USER}/logs/adminer:/var/log
+      - adminer_logs:/var/log
     ports:
       - "8080:8080"
     networks:
@@ -140,10 +139,11 @@ services:
   #     dockerfile: Dockerfile
   #     args:
   #       - USER_ID=${PORTFOLIO_USER_UID}
+  #
   #   container_name: portfolio
   #   volumes:
   #     - wordpress_data:/var/www/html/wordpress
-  #     - /home/${USER}/logs/portfolio:/var/log
+  #     - portfolio_logs:/var/log
   #   ports:
   #     - "8081:8081"
   #   networks:
@@ -167,26 +167,30 @@ services:
 
 volumes:
   mariadb_data:
-    name: mariadb_data
     driver: local
     driver_opts:
-      type: bind
-      device: /home/${USER}/data/mariadb
+      type: none
+      device: /home/${USERNAME}/data/mariadb
       o: bind
   wordpress_data:
-    name: wordpress_data
     driver: local
     driver_opts:
-      type: bind
-      device: /home/${USER}/data/wordpress
+      type: none
+      device: /home/${USERNAME}/data/wordpress
       o: bind
   adminer_data:
-    name: adminer_data
     driver: local
     driver_opts:
-      type: bind
-      device: /home/${USER}/data/adminer
+      type: none
+      device: /home/${USERNAME}/data/adminer
       o: bind
+  mariadb_logs:
+  nginx_logs:
+  wordpress_logs:
+  redis_logs:
+  vsftpd_logs:
+  adminer_logs:
+  # portfolio_logs:
 
 networks:
   backend:
