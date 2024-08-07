@@ -6,9 +6,11 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/08/06 13:38:33 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/07 11:21:34 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+export USERNAME			= $(shell whoami)
 
 DOCKER_COMPOSE_PATH		= srcs/docker-compose.yml
 DOMAIN_NAME				= craimond.42.fr
@@ -16,8 +18,8 @@ DEPS					= docker-compose hostsed openssl ca-certificates
 
 NGINX_SSL				= srcs/requirements/nginx/conf/ssl
 FTP_SSL					= srcs/requirements/vsftpd/conf/ssl
-NGINX_CERT				= $(NGINX_SSL)/certs/$(DOMAIN_NAME).crt
-NGINX_KEY				= $(NGINX_SSL)/private/$(DOMAIN_NAME).key
+NGINX_CERT				= $(NGINX_SSL)/certs/nginx.crt
+NGINX_KEY				= $(NGINX_SSL)/private/nginx.key
 FTP_CERT				= $(FTP_SSL)/certs/vsftpd.crt
 FTP_KEY					= $(FTP_SSL)/private/vsftpd.key
 CERTS_SUBJ				= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
@@ -37,8 +39,6 @@ DATA_DIR				= /home/$(USERNAME)/data
 DATA_SUBDIRS			= mariadb wordpress adminer
 DATA_DIRS				= $(addprefix $(DATA_DIR)/, $(DATA_SUBDIRS))
 
-export USERNAME			= $(shell whoami)
-
 all: deps init build down up
 
 deps:
@@ -50,7 +50,7 @@ deps:
 init:
 	sudo mkdir -p $(DATA_DIRS)
 	echo "created data folders"
-	sudo chown -R $(MYSQL_UID) $(DATA_DIR)/mariadb
+	sudo chown -R $(MARIADB_USER_UID) $(DATA_DIR)/mariadb
 	sudo chown -R :$(WP_GROUP_GID) $(DATA_DIR)/wordpress
 	sudo chown -R $(ADMINER_USER_UID) $(DATA_DIR)/adminer
 	sudo chmod -R 755 $(DATA_DIR)
@@ -59,8 +59,8 @@ init:
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
 	sudo mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
-	sudo openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
-	sudo openssl req -x509 -nodes -days 30 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
+	sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
 	sudo cp $(NGINX_CERT) $(LOCAL_CERTS_DIR)
 	sudo cp $(FTP_CERT) $(LOCAL_CERTS_DIR)
 	echo "created ssl certificates"
