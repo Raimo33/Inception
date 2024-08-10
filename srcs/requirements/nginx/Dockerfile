@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/08/07 11:26:04 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/10 13:22:25 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,7 @@ VOLUME /var/www/html/wordpress
 VOLUME /var/www/html/adminer
 VOLUME /var/log
 
-# CMD ["nginx", "-g", "daemon off;"]
-CMD ["tail", "-f", "/dev/null"]
-#TODO fix per qualche motivo il file .key e' vuoto
+CMD ["nginx", "-g", "daemon off;"]
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://nginx.backend:443"]
 
