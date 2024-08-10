@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/08/01 13:05:45 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ USER redis-user
 EXPOSE 6379
 VOLUME /var/log
 
-CMD ["redis-server", "/etc/redis.conf"]
+ENTRYPOINT ["redis-server", "/etc/redis.conf"]
+
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["redis-cli", "-h", "redis.backend", "ping"]

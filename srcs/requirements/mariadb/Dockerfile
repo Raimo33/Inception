@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/08/06 12:46:42 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ EXPOSE 3306
 VOLUME /var/lib/mysql
 VOLUME /var/log
 
-CMD ["/usr/bin/mysqld", "--datadir=/var/lib/mysql", "--user=mariadb_user"]
+ENTRYPOINT ["/usr/bin/mysqld", "--datadir=/var/lib/mysql", "--user=mariadb_user"]
+
 #TODO fix: in build -> error: no database selected
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["mariadb-admin", "ping"]

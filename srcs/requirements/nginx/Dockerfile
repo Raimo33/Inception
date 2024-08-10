@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:22:25 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ARG USER_ID GROUP_ID
 
 RUN apk add --no-cache nginx curl
 
-COPY ./conf/default.conf	/etc/nginx/http.d/
+COPY ./conf/default.conf	/etc/nginx/http.d/default.conf
 COPY ./conf/ssl				/etc/ssl
 
 RUN mkdir -p /run/nginx /var/log/nginx
@@ -35,7 +35,8 @@ VOLUME /var/www/html/wordpress
 VOLUME /var/www/html/adminer
 VOLUME /var/log
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://nginx.backend:443"]
 

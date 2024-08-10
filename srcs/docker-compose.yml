@@ -16,7 +16,7 @@ services:
       - mariadb_data:/var/lib/mysql
       - mariadb_logs:/var/log
     ports:
-      - "3307:3306"
+      - "3307:3307"
     networks:
       - backend
     restart: always

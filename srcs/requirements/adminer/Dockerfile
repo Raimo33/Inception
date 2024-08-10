@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/08/03 14:22:44 by craimond         ###   ########.fr        #
+#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ WORKDIR /var/www/html/adminer
 VOLUME 	/var/www/html/adminer
 VOLUME 	/var/log
 
-# CMD ["php-fpm82", "-F"]
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["php-fpm82", "-F"]
+
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://adminer.backend:8080"]
