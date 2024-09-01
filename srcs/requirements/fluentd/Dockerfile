@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
+#    Created: 2024/08/10 13:26:30 by craimond          #+#    #+#              #
+#    Updated: 2024/08/10 13:37:09 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,20 +16,21 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID
 
-RUN apk add --no-cache redis tini
+#TODO controllare se sono tutte necessarie
+RUN apk add --no-cache build-base ca-certificates ruby ruby-dev libffi-dev openssl-dev yaml-dev zlib-dev
+RUN gem install fluentd --no-document --version 1.12.3
 
-COPY ./conf/redis.conf	/etc/redis.conf
+COPY ./conf/fluentd.conf	/etc/fluentd/conf.d/fluentd.conf
 
-RUN touch /var/log/redis.log
+RUN adduser -u $USER_ID -SD fluentd-user
+RUN chown -R fluentd-user /var/lib/fluentd /run/fluentd /var/log/fluentd /etc/fluentd/conf.d
 
-RUN adduser -u $USER_ID -DS redis-user
-RUN chown -R redis-user /var/log/redis.log
+USER fluentd-user
+WORKDIR /etc/fluentd
+EXPOSE 24224
+VOLUME 
 
-USER redis-user
-EXPOSE 6379
-VOLUME /var/log
+ENTRYPOINT ["fluentd", "-c", "/etc/fluentd/conf.d/fluentd.conf"]
+CMD ["-vv"]
 
-ENTRYPOINT ["redis-server", "/etc/redis.conf"]
-
-
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD ["redis-cli", "-h", "redis.backend", "ping"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD []

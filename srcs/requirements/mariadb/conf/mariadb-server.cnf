@@ -5,6 +5,12 @@ bind-address = 0.0.0.0
 port = 3306
 skip-networking = 0
 
+general_log = 1
+slow_query_log = 1
+log_error = /var/log/mysql/error.log
+general_log_file = /var/log/mysql/query.log
+slow_query_log_file = /var/log/mysql/slow_query.log
+
 [galera]
 
 [embedded]
