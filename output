@@ -1,0 +1,477 @@
+installing docker-compose hostsed openssl ca-certificates
+docker-compose hostsed openssl ca-certificates installed
+created data and logs folders
+set permissions for data and logs folders
+added DNS resolution for craimond.42.fr
+created ssl certificates
+added ssl certificates to trusted list
+#0 building with "default" instance using docker driver
+
+#1 [fluentd internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.85kB done
+#1 DONE 0.1s
+
+#2 [mariadb internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.90kB done
+#2 DONE 0.1s
+
+#3 [mariadb internal] load metadata for docker.io/library/alpine:3.19
+#3 DONE 1.4s
+
+#4 [fluentd internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.2s
+
+#5 [mariadb internal] load .dockerignore
+#5 transferring context: 34B done
+#5 DONE 0.2s
+
+#6 [fluentd 1/8] FROM docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185
+#6 resolve docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 0.1s done
+#6 ...
+
+#7 [mariadb internal] load build context
+#7 transferring context: 1.29kB done
+#7 DONE 0.1s
+
+#8 [fluentd internal] load build context
+#8 transferring context: 668B done
+#8 DONE 0.2s
+
+#6 [fluentd 1/8] FROM docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185
+#6 sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 1.64kB / 1.64kB done
+#6 sha256:8d733e27df31ac40ec64633002a200a0aed5477866730e0bfeb8d2dec5d8e76a 528B / 528B done
+#6 sha256:494edff7360579cb513922f6c60ecab4bb267a9b8339f7962f6a78c5c31ec923 1.47kB / 1.47kB done
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 0B / 3.42MB 0.1s
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 1.05MB / 3.42MB 0.3s
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 3.42MB / 3.42MB 0.4s
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 3.42MB / 3.42MB 0.4s done
+#6 extracting sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 0.1s
+#6 extracting sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 0.1s done
+#6 DONE 0.8s
+
+#9 [mariadb  2/13] RUN apk add --no-cache mariadb mariadb-client envsubst shadow tini
+#9 0.342 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz
+#9 0.482 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/APKINDEX.tar.gz
+#9 0.904 (1/30) Installing libintl (0.22.3-r0)
+#9 0.914 (2/30) Installing gettext-envsubst (0.22.3-r0)
+#9 0.925 (3/30) Installing mariadb-common (10.11.6-r0)
+#9 0.996 (4/30) Installing libaio (0.3.113-r2)
+#9 1.005 (5/30) Installing ca-certificates (20240226-r0)
+#9 1.043 (6/30) Installing brotli-libs (1.1.0-r1)
+#9 1.083 (7/30) Installing c-ares (1.27.0-r0)
+#9 1.096 (8/30) Installing libunistring (1.1-r2)
+#9 1.167 (9/30) Installing libidn2 (2.3.4-r4)
+#9 1.183 (10/30) Installing nghttp2-libs (1.58.0-r0)
+#9 1.199 (11/30) Installing libcurl (8.9.0-r0)
+#9 1.233 (12/30) Installing libgcc (13.2.1_git20231014-r0)
+#9 1.249 (13/30) Installing xz-libs (5.4.5-r0)
+#9 1.268 (14/30) Installing ncurses-terminfo-base (6.4_p20231125-r0)
+#9 1.283 (15/30) Installing libncursesw (6.4_p20231125-r0)
+#9 1.307 (16/30) Installing skalibs (2.14.0.1-r0)
+#9 1.324 (17/30) Installing utmps-libs (0.1.2.2-r0)
+#9 1.337 (18/30) Installing linux-pam (1.5.3-r7)
+#9 1.370 (19/30) Installing pcre2 (10.42-r2)
+#9 1.402 (20/30) Installing libstdc++ (13.2.1_git20231014-r0)
+#9 1.476 (21/30) Installing libxml2 (2.11.8-r0)
+#9 1.518 (22/30) Installing zstd-libs (1.5.5-r8)
+#9 1.557 (23/30) Installing mariadb (10.11.6-r0)
+#9 1.581 Executing mariadb-10.11.6-r0.pre-install
+#9 5.774 (24/30) Installing libbz2 (1.0.8-r6)
+#9 5.786 (25/30) Installing perl (5.38.2-r0)
+#9 6.519 (26/30) Installing mariadb-client (10.11.6-r0)
+#9 7.163 (27/30) Installing libmd (1.1.0-r0)
+#9 7.174 (28/30) Installing libbsd (0.11.7-r3)
+#9 7.186 (29/30) Installing shadow (4.14.2-r0)
+#9 7.233 (30/30) Installing tini (0.19.0-r2)
+#9 7.245 Executing busybox-1.36.1-r19.trigger
+#9 7.250 Executing ca-certificates-20240226-r0.trigger
+#9 7.283 OK: 262 MiB in 45 packages
+#9 ...
+
+#10 [fluentd 2/8] RUN apk add --no-cache build-base ruby ruby-dev libffi-dev openssl-dev yaml-dev zlib-dev curl
+#10 0.318 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz
+#10 0.480 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/APKINDEX.tar.gz
+#10 0.918 (1/51) Upgrading libcrypto3 (3.1.6-r2 -> 3.1.7-r0)
+#10 1.047 (2/51) Upgrading libssl3 (3.1.6-r2 -> 3.1.7-r0)
+#10 1.073 (3/51) Installing libgcc (13.2.1_git20231014-r0)
+#10 1.085 (4/51) Installing jansson (2.14-r4)
+#10 1.096 (5/51) Installing libstdc++ (13.2.1_git20231014-r0)
+#10 1.174 (6/51) Installing zstd-libs (1.5.5-r8)
+#10 1.203 (7/51) Installing binutils (2.41-r0)
+#10 1.405 (8/51) Installing libmagic (5.45-r1)
+#10 1.463 (9/51) Installing file (5.45-r1)
+#10 1.472 (10/51) Installing libgomp (13.2.1_git20231014-r0)
+#10 1.493 (11/51) Installing libatomic (13.2.1_git20231014-r0)
+#10 1.503 (12/51) Installing gmp (6.3.0-r0)
+#10 1.524 (13/51) Installing isl26 (0.26-r1)
+#10 1.595 (14/51) Installing mpfr4 (4.2.1-r0)
+#10 1.624 (15/51) Installing mpc1 (1.3.1-r1)
+#10 1.638 (16/51) Installing gcc (13.2.1_git20231014-r0)
+#10 5.688 (17/51) Installing libstdc++-dev (13.2.1_git20231014-r0)
+#10 6.164 (18/51) Installing musl-dev (1.2.4_git20230717-r4)
+#10 6.499 (19/51) Installing libc-dev (0.7.2-r5)
+#10 6.509 (20/51) Installing g++ (13.2.1_git20231014-r0)
+#10 7.721 (21/51) Installing make (4.4.1-r2)
+#10 7.736 (22/51) Installing fortify-headers (1.1-r3)
+#10 7.747 (23/51) Installing patch (2.7.6-r10)
+#10 7.761 (24/51) Installing build-base (0.5-r3)
+#10 7.771 (25/51) Installing ca-certificates (20240226-r0)
+#10 7.798 (26/51) Installing brotli-libs (1.1.0-r1)
+#10 7.830 (27/51) Installing c-ares (1.27.0-r0)
+#10 7.843 (28/51) Installing libunistring (1.1-r2)
+#10 7.890 (29/51) Installing libidn2 (2.3.4-r4)
+#10 7.905 (30/51) Installing nghttp2-libs (1.58.0-r0)
+#10 7.917 (31/51) Installing libcurl (8.9.0-r0)
+#10 7.943 (32/51) Installing curl (8.9.0-r0)
+#10 7.960 (33/51) Installing linux-headers (6.5-r0)
+#10 8.091 (34/51) Installing libffi (3.4.4-r3)
+#10 8.102 (35/51) Installing pkgconf (2.1.0-r0)
+#10 8.115 (36/51) Installing libffi-dev (3.4.4-r3)
+#10 8.133 (37/51) Installing openssl-dev (3.1.7-r0)
+#10 8.169 (38/51) Installing ncurses-terminfo-base (6.4_p20231125-r0)
+#10 8.181 (39/51) Installing libncursesw (6.4_p20231125-r0)
+#10 8.199 (40/51) Installing readline (8.2.1-r2)
+#10 8.214 (41/51) Installing yaml (0.2.5-r2)
+#10 8.227 (42/51) Installing ruby-libs (3.2.4-r0)
+#10 8.555 (43/51) Installing libucontext (1.2-r2)
+#10 8.566 (44/51) Installing ruby (3.2.4-r0)
+#10 8.577 (45/51) Installing ruby-rdoc (3.2.4-r0)
+#10 8.632 (46/51) Installing libgmpxx (6.3.0-r0)
+#10 8.642 (47/51) Installing gmp-dev (6.3.0-r0)
+#10 8.778 (48/51) Installing libucontext-dev (1.2-r2)
+#10 8.789 (49/51) Installing ruby-dev (3.2.4-r0)
+#10 8.829 (50/51) Installing yaml-dev (0.2.5-r2)
+#10 8.844 (51/51) Installing zlib-dev (1.3.1-r0)
+#10 8.856 Executing busybox-1.36.1-r19.trigger
+#10 8.860 Executing ca-certificates-20240226-r0.trigger
+#10 8.893 OK: 267 MiB in 64 packages
+#10 DONE 12.2s
+
+#9 [mariadb  2/13] RUN apk add --no-cache mariadb mariadb-client envsubst shadow tini
+#9 DONE 12.2s
+
+#11 [mariadb  3/13] COPY ./tools/					/tmp
+#11 DONE 0.2s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#13 [mariadb  4/13] COPY ./conf/mariadb-server.cnf	/etc/my.cnf.d/mariadb-server.cnf
+#13 DONE 0.2s
+
+#14 [mariadb  5/13] RUN mkdir -p /run/mysqld /var/log/mysql /var/lib/mysql
+#14 DONE 0.3s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#15 [mariadb  6/13] RUN touch /var/log/mysql/error.log /var/log/mysql/query.log /var/log/mysql/slow_query.log
+#15 DONE 0.3s
+
+#16 [mariadb  7/13] RUN adduser -u 1001 -SD mariadb_user
+#16 DONE 0.3s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#17 [mariadb  8/13] RUN chown -R mariadb_user /var/lib/mysql /var/log/mysql /run/mysqld /etc/my.cnf.d/
+#17 DONE 0.3s
+
+#18 [mariadb  9/13] RUN chmod +x /tmp/init_db.sh
+#18 DONE 0.4s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 2.587 Building native extensions. This could take a while...
+#12 4.789 Successfully installed yajl-ruby-1.4.3
+#12 4.789 Successfully installed webrick-1.7.0
+#12 4.789 Successfully installed concurrent-ruby-1.3.4
+#12 4.789 Successfully installed tzinfo-2.0.6
+#12 4.789 Successfully installed tzinfo-data-1.2024.1
+#12 4.789 Building native extensions. This could take a while...
+#12 6.182 Successfully installed strptime-0.2.5
+#12 6.182 Successfully installed sigdump-0.2.5
+#12 6.182 Successfully installed serverengine-2.3.2
+#12 6.182 Building native extensions. This could take a while...
+#12 ...
+
+#19 [mariadb 10/13] RUN mariadb-install-db --datadir=/var/lib/mysql --user=mariadb_user
+#19 0.319 Installing MariaDB/MySQL system tables in '/var/lib/mysql' ...
+#19 5.043 OK
+#19 5.043 
+#19 5.043 To start mariadbd at boot time you have to copy
+#19 5.043 support-files/mariadb.service to the right place for your system
+#19 5.043 
+#19 5.043 
+#19 5.043 Two all-privilege accounts were created.
+#19 5.043 One is root@localhost, it has no password, but you need to
+#19 5.043 be system 'root' user to connect. Use, for example, sudo mysql
+#19 5.043 The second is mariadb_user@localhost, it has no password either, but
+#19 5.043 you need to be the system 'mariadb_user' user to connect.
+#19 5.043 After connecting you can set the password, if you would need to be
+#19 5.043 able to connect as any of these users with a password and without sudo
+#19 5.043 
+#19 5.043 See the MariaDB Knowledgebase at https://mariadb.com/kb
+#19 5.043 
+#19 5.043 You can start the MariaDB daemon with:
+#19 5.043 cd '/usr' ; /usr/bin/mariadb-safe --datadir='/var/lib/mysql'
+#19 5.043 
+#19 5.043 You can test the MariaDB daemon with mysql-test-run.pl
+#19 5.043 cd '/usr/mysql-test' ; perl mariadb-test-run.pl
+#19 5.043 
+#19 5.043 Please report any problems at https://mariadb.org/jira
+#19 5.043 
+#19 5.043 The latest information about MariaDB is available at https://mariadb.org/.
+#19 5.043 
+#19 5.043 Consider joining MariaDB's strong and vibrant community:
+#19 5.043 https://mariadb.org/get-involved/
+#19 5.043 
+#19 DONE 5.3s
+
+#20 [mariadb 11/13] WORKDIR /tmp
+#20 DONE 0.2s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#21 [mariadb 12/13] RUN ./init_db.sh
+#21 2.281 mysqld is alive
+#21 DONE 3.4s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#22 [mariadb 13/13] WORKDIR /var/lib/mysql
+#22 DONE 0.2s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#23 [mariadb] exporting to image
+#23 exporting layers
+#23 exporting layers 2.2s done
+#23 writing image sha256:584781b61bd4ecfec4f587d6e56ef5a79c573999226ce2442c33521928b6da90 done
+#23 naming to docker.io/library/srcs-mariadb 0.0s done
+#23 DONE 2.2s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 12.54 Successfully installed msgpack-1.7.2
+#12 12.54 Building native extensions. This could take a while...
+#12 13.52 Successfully installed http_parser.rb-0.6.0
+#12 13.52 Building native extensions. This could take a while...
+#12 ...
+
+#24 [wordpress internal] load build definition from Dockerfile
+#24 transferring dockerfile: 2.08kB done
+#24 DONE 0.1s
+
+#25 [adminer internal] load build definition from Dockerfile
+#25 transferring dockerfile: 1.67kB done
+#25 DONE 0.1s
+
+#3 [adminer internal] load metadata for docker.io/library/alpine:3.19
+#3 DONE 1.8s
+
+#6 [adminer 1/8] FROM docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185
+#6 resolve docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 0.1s done
+#6 sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 1.64kB / 1.64kB done
+#6 sha256:8d733e27df31ac40ec64633002a200a0aed5477866730e0bfeb8d2dec5d8e76a 528B / 528B done
+#6 sha256:494edff7360579cb513922f6c60ecab4bb267a9b8339f7962f6a78c5c31ec923 1.47kB / 1.47kB done
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 3.42MB / 3.42MB 0.4s done
+#6 extracting sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 0.1s done
+#6 DONE 0.8s
+
+#26 [adminer internal] load .dockerignore
+#26 transferring context: 34B done
+#26 DONE 0.0s
+
+#27 [adminer internal] load build context
+#27 DONE 0.0s
+
+#28 [wordpress internal] load .dockerignore
+#28 transferring context: 34B done
+#28 DONE 0.1s
+
+#29 [adminer 2/8] RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib curl
+#29 ...
+
+#6 [wordpress 1/8] FROM docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185
+#6 resolve docker.io/library/alpine:3.19@sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 0.1s done
+#6 sha256:95c16745f100f44cf9a0939fd3f357905f845f8b6fa7d0cde0e88c9764060185 1.64kB / 1.64kB done
+#6 sha256:8d733e27df31ac40ec64633002a200a0aed5477866730e0bfeb8d2dec5d8e76a 528B / 528B done
+#6 sha256:494edff7360579cb513922f6c60ecab4bb267a9b8339f7962f6a78c5c31ec923 1.47kB / 1.47kB done
+#6 sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 3.42MB / 3.42MB 0.4s done
+#6 extracting sha256:46b060cc26202cf98e28414d790b5cabd67094bba50315a1ae2e9daf913fca4f 0.1s done
+#6 DONE 0.8s
+
+#30 [wordpress internal] load build context
+#30 DONE 0.0s
+
+#31 [wordpress  2/13] RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
+#31 ...
+
+#32 [adminer 3/8] ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/index.php
+#32 DONE 0.5s
+
+#32 [adminer 3/8] ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/index.php
+#32 DONE 0.5s
+
+#27 [adminer internal] load build context
+#27 transferring context: 401B done
+#27 DONE 0.0s
+
+#31 [wordpress  2/13] RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
+#31 0.446 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz
+#31 ...
+
+#33 [wordpress  3/13] ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
+#33 DONE 0.5s
+
+#30 [wordpress internal] load build context
+#30 transferring context: 1.10kB done
+#30 DONE 0.1s
+
+#31 [wordpress  2/13] RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
+#31 0.612 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/APKINDEX.tar.gz
+#31 1.136 (1/34) Installing ca-certificates (20240226-r0)
+#31 1.160 (2/34) Installing brotli-libs (1.1.0-r1)
+#31 1.198 (3/34) Installing c-ares (1.27.0-r0)
+#31 1.209 (4/34) Installing libunistring (1.1-r2)
+#31 1.256 (5/34) Installing libidn2 (2.3.4-r4)
+#31 1.272 (6/34) Installing nghttp2-libs (1.58.0-r0)
+#31 1.285 (7/34) Installing libcurl (8.9.0-r0)
+#31 1.311 (8/34) Installing curl (8.9.0-r0)
+#31 1.327 (9/34) Installing mariadb-common (10.11.6-r0)
+#31 1.451 (10/34) Installing libbz2 (1.0.8-r6)
+#31 1.464 (11/34) Installing perl (5.38.2-r0)
+#31 2.198 (12/34) Installing libgcc (13.2.1_git20231014-r0)
+#31 2.210 (13/34) Installing ncurses-terminfo-base (6.4_p20231125-r0)
+#31 2.227 (14/34) Installing libncursesw (6.4_p20231125-r0)
+#31 2.245 (15/34) Installing libstdc++ (13.2.1_git20231014-r0)
+#31 2.309 (16/34) Installing mariadb-client (10.11.6-r0)
+#31 2.783 (17/34) Installing php82-common (8.2.20-r0)
+#31 2.801 (18/34) Installing argon2-libs (20190702-r5)
+#31 2.813 (19/34) Installing libedit (20230828.3.1-r3)
+#31 2.826 (20/34) Installing pcre2 (10.42-r2)
+#31 2.851 (21/34) Installing xz-libs (5.4.5-r0)
+#31 2.868 (22/34) Installing libxml2 (2.11.8-r0)
+#31 2.905 (23/34) Installing php82 (8.2.20-r0)
+#31 3.046 (24/34) Installing php82-curl (8.2.20-r0)
+#31 3.058 (25/34) Installing libacl (2.3.1-r4)
+#31 3.068 (26/34) Installing php82-fpm (8.2.20-r0)
+#31 3.194 (27/34) Installing oniguruma (6.9.9-r0)
+#31 3.220 (28/34) Installing php82-mbstring (8.2.20-r0)
+#31 3.264 (29/34) Installing php82-openssl (8.2.20-r0)
+#31 3.283 (30/34) Installing php82-mysqlnd (8.2.20-r0)
+#31 3.299 (31/34) Installing php82-mysqli (8.2.20-r0)
+#31 3.314 (32/34) Installing php82-phar (8.2.20-r0)
+#31 3.332 (33/34) Installing php82-tokenizer (8.2.20-r0)
+#31 3.343 (34/34) Installing php82-xml (8.2.20-r0)
+#31 3.360 Executing busybox-1.36.1-r19.trigger
+#31 3.368 Executing ca-certificates-20240226-r0.trigger
+#31 3.436 OK: 115 MiB in 49 packages
+#31 ...
+
+#29 [adminer 2/8] RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib curl
+#29 0.369 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz
+#29 0.594 fetch https://dl-cdn.alpinelinux.org/alpine/v3.19/community/x86_64/APKINDEX.tar.gz
+#29 1.001 (1/27) Installing ca-certificates (20240226-r0)
+#29 1.033 (2/27) Installing brotli-libs (1.1.0-r1)
+#29 1.063 (3/27) Installing c-ares (1.27.0-r0)
+#29 1.082 (4/27) Installing libunistring (1.1-r2)
+#29 1.120 (5/27) Installing libidn2 (2.3.4-r4)
+#29 1.145 (6/27) Installing nghttp2-libs (1.58.0-r0)
+#29 1.196 (7/27) Installing libcurl (8.9.0-r0)
+#29 1.243 (8/27) Installing curl (8.9.0-r0)
+#29 1.279 (9/27) Installing php82-common (8.2.20-r0)
+#29 1.293 (10/27) Installing argon2-libs (20190702-r5)
+#29 1.306 (11/27) Installing ncurses-terminfo-base (6.4_p20231125-r0)
+#29 1.318 (12/27) Installing libncursesw (6.4_p20231125-r0)
+#29 1.340 (13/27) Installing libedit (20230828.3.1-r3)
+#29 1.355 (14/27) Installing pcre2 (10.42-r2)
+#29 1.384 (15/27) Installing xz-libs (5.4.5-r0)
+#29 1.410 (16/27) Installing libxml2 (2.11.8-r0)
+#29 1.455 (17/27) Installing php82 (8.2.20-r0)
+#29 1.574 (18/27) Installing php82-ctype (8.2.20-r0)
+#29 1.584 (19/27) Installing php82-dom (8.2.20-r0)
+#29 1.600 (20/27) Installing libacl (2.3.1-r4)
+#29 1.609 (21/27) Installing php82-fpm (8.2.20-r0)
+#29 1.774 (22/27) Installing php82-iconv (8.2.20-r0)
+#29 1.785 (23/27) Installing php82-openssl (8.2.20-r0)
+#29 1.804 (24/27) Installing php82-mysqlnd (8.2.20-r0)
+#29 1.822 (25/27) Installing php82-mysqli (8.2.20-r0)
+#29 1.832 (26/27) Installing php82-phar (8.2.20-r0)
+#29 1.851 (27/27) Installing php82-session (8.2.20-r0)
+#29 1.863 Executing busybox-1.36.1-r19.trigger
+#29 1.869 Executing ca-certificates-20240226-r0.trigger
+#29 1.949 OK: 32 MiB in 42 packages
+#29 DONE 4.2s
+
+#31 [wordpress  2/13] RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
+#31 DONE 4.1s
+
+#34 [wordpress  3/13] ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
+#34 ...
+
+#35 [adminer 3/8] ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/index.php
+#35 DONE 0.3s
+
+#34 [wordpress  3/13] ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
+#34 DONE 0.3s
+
+#36 [wordpress  4/13] WORKDIR	/VAR/WWW/HTML/WORDPRESS
+#36 DONE 0.2s
+
+#37 [adminer 4/8] COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
+#37 DONE 0.3s
+
+#38 [adminer 5/8] RUN touch /var/log/php82/access.log /var/log/php82/error.log
+#38 DONE 0.5s
+
+#39 [adminer 6/8] RUN adduser -u 1006 -SD adminer-user
+#39 DONE 0.3s
+
+#40 [wordpress  5/13] RUN wp core download --version=6.5.5
+#40 0.433 Downloading WordPress 6.5.5 (en_US)...
+#40 ...
+
+#41 [adminer 7/8] RUN chown -R adminer-user /var/log/php82
+#41 DONE 0.3s
+
+#42 [adminer 8/8] WORKDIR /var/www/html/adminer
+#42 DONE 0.2s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 ...
+
+#43 [adminer] exporting to image
+#43 exporting layers
+#43 exporting layers 0.7s done
+#43 writing image sha256:326991d5d4e1be88eb5dceeef55e760204b76be4e4aef6c11eaa22912b1343a6 done
+#43 naming to docker.io/library/srcs-adminer 0.1s done
+#43 DONE 1.0s
+
+#12 [fluentd 3/8] RUN gem install fluentd --no-document --version 1.12.3
+#12 21.08 Successfully installed cool.io-1.8.1
+#12 21.08 Successfully installed bundler-2.5.18
+#12 21.08 Successfully installed fluentd-1.12.3
+#12 21.08 13 gems installed
+#12 DONE 21.5s
+
+#44 [fluentd 4/8] COPY ./conf/fluent.conf	/etc/fluentd/conf.d/fluent.conf
+#44 DONE 0.4s
+
+#40 [wordpress  5/13] RUN wp core download --version=6.5.5
+#40 ...
+
+#45 [fluentd 5/8] RUN mkdir -p /var/lib/fluentd /run/fluentd /var/log/fluentd /fluentd
+#45 DONE 0.5s
+
+#46 [fluentd 6/8] RUN adduser -u 1008 -SD fluentd-user
+#46 DONE 0.5s
+
+#40 [wordpress  5/13] RUN wp core download --version=6.5.5
+#40 CANCELED
+
+#47 [fluentd 7/8] RUN chown -R fluentd-user /var/lib/fluentd /run/fluentd /var/log/fluentd /etc/fluentd/conf.d /fluentd
+#47 DONE 0.4s
