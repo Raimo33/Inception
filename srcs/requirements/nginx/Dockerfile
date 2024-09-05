@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 15:56:06 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,9 @@ RUN chmod -R 755 /etc/ssl
 
 USER nginx-user:wp-group
 EXPOSE 443
-VOLUME /var/www/html/wordpress
-VOLUME /var/www/html/adminer
-VOLUME /var/log
+VOLUME ["/var/www/html/wordpress", "/var/log/adminer", "/var/log"]
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
-
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "https://nginx.backend:443"]
 

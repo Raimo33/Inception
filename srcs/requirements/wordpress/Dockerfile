@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:06 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 15:56:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,7 @@ RUN chmod +x /run/setup_wp.sh
 
 USER wp-user:wp-group
 EXPOSE 9000
-VOLUME /var/www/html/wordpress
-VOLUME /var/log
+VOLUME ["/var/www/html/wordpress", "/var/log"]
 
 ENTRYPOINT ["/run/setup_wp.sh"]
 CMD ["php-fpm82", "-F"]

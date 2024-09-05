@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 17:18:51 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,10 +29,8 @@ RUN chown -R adminer-user /var/log/php82
 USER adminer-user
 EXPOSE 8080
 WORKDIR /var/www/html/adminer
-VOLUME 	/var/www/html/adminer
-VOLUME 	/var/log
+VOLUME 	[ "/var/www/html/adminer", "/var/log" ]
 
 ENTRYPOINT ["php-fpm82", "-F"]
-
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fk", "http://adminer.backend:8080"]

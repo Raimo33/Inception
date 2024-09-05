@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:20:03 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 18:11:20 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ ADMINER_USER_UID		= 1006
 PORTFOLIO_USER_UI		= 1007
 FLUENTD_USER_UID		= 1008
 
+LOGS_DIR				= /home/$(USERNAME)/logs
 DATA_DIR				= /home/$(USERNAME)/data
 DATA_SUBDIRS			= mariadb wordpress adminer
 DATA_DIRS				= $(addprefix $(DATA_DIR)/, $(DATA_SUBDIRS))
@@ -48,14 +49,16 @@ deps:
 	echo "$(DEPS) installed"
 
 init:
-	sudo mkdir -p $(DATA_DIRS)
-	echo "created data folders"
+	sudo mkdir -p $(DATA_DIRS) $(LOGS_DIR)
+	echo "created data and logs folders"
+	sudo chown -R $(FLUENTD_USER_UID) $(LOGS_DIR)
+	sudo chmod -R 755 $(LOGS_DIR)
 	sudo chown -R $(MARIADB_USER_UID) $(DATA_DIR)/mariadb
 	sudo chown -R :$(WP_GROUP_GID) $(DATA_DIR)/wordpress
 	sudo chown -R $(ADMINER_USER_UID) $(DATA_DIR)/adminer
 	sudo chmod -R 755 $(DATA_DIR)
 	sudo chmod -R 774 $(DATA_DIR)/wordpress
-	echo "set permissions for data folders"
+	echo "set permissions for data and logs folders"
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
 	mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
@@ -88,8 +91,8 @@ fclean:
 	echo "removed domain $(DOMAIN_NAME) from hosts file"
 	sudo rm -rf $(NGINX_SSL) $(FTP_SSL)
 	echo "removed ssl certificates"
-	sudo rm -rf $(DATA_DIR)
-	echo "removed data folders"
+	sudo rm -rf $(DATA_DIR) $(LOGS_DIR)
+	echo "removed data and logs folders"
 
 re: fclean all
 

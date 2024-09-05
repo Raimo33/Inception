@@ -155,17 +155,29 @@ services:
   #     - wordpress
   #   init: true
   
-  # fluentd:
-  #   build:
-  #     context: ./requirements/fluentd
-  #     dockerfile: Dockerfile
-  #   container_name: fluentd
-  #   volumes:
-  #     - /var/lib/docker/containers:/var/lib/docker/containers
-  #   networks:
-  #     - backend
-  #   restart: always
-  #   init: true
+  fluentd:
+    build:
+      context: ./requirements/fluentd
+      dockerfile: Dockerfile
+      args:
+        - USER_ID=${FLUENTD_USER_UID}
+    container_name: fluentd
+    volumes:
+      - centralized-logs:/centralized-logs
+      - mariadb_logs:/var/log/mariadb
+      - nginx_logs:/var/log/nginx
+      - wordpress_logs:/var/log/wordpress
+      - redis_logs:/var/log/redis
+      - vsftpd_logs:/var/log/vsftpd
+      - adminer_logs:/var/log/adminer
+      # - portfolio_logs:/var/log/portfolio
+    ports:
+    #TODO togliere la porta forse non stando utilizzando fluentd come server
+      - "24224:24224"
+    networks:
+      - backend
+    restart: always
+    init: true
 
 volumes:
   mariadb_data:
@@ -185,6 +197,12 @@ volumes:
     driver_opts:
       type: none
       device: /home/${USERNAME}/data/adminer
+      o: bind
+  centralized-logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs
       o: bind
   mariadb_logs:
   nginx_logs:

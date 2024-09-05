@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 15:55:41 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,8 +36,7 @@ RUN ./init_db.sh
 WORKDIR /var/lib/mysql
 USER mariadb_user
 EXPOSE 3306
-VOLUME /var/lib/mysql
-VOLUME /var/log
+VOLUME ["/var/lib/mysql", "/var/log"]
 
 ENTRYPOINT ["/usr/bin/mysqld", "--datadir=/var/lib/mysql", "--user=mariadb_user"]
 

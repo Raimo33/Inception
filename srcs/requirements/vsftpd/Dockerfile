@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/08/10 13:40:39 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 15:56:32 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,9 @@ RUN chmod -R 755 /etc/ssl
 USER	ftp-user:wp-group
 EXPOSE	21 21000-21010 20
 WORKDIR	/home/vsftpd/ftp-user
-VOLUME	/var/www/html/wordpress
-VOLUME	/var/log
+VOLUME	["/var/www/html/wordpress", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
-
 
 #TODO fix curl: (56) response reading failed (errno: 115)
 HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fk", "ftp://vsftpd.backend:21"]
