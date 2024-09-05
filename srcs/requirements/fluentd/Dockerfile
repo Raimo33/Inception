@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/10 13:26:30 by craimond          #+#    #+#              #
-#    Updated: 2024/09/05 18:09:30 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/05 18:56:49 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,6 @@ RUN chown -R fluentd-user /var/lib/fluentd /run/fluentd /var/log/fluentd /etc/fl
 
 USER fluentd-user
 WORKDIR /etc/fluentd
-EXPOSE 24224
 VOLUME ["/centralized-logs", "/var/log/mariadb", "/var/log/nginx", "/var/log/wordpress", "/var/log/redis", "/var/log/vsftpd", "/var/log/adminer"]
 
 ENTRYPOINT ["fluentd", "-c", "/etc/fluentd/conf.d/fluent.conf"]

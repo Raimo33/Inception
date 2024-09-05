@@ -171,9 +171,6 @@ services:
       - vsftpd_logs:/var/log/vsftpd
       - adminer_logs:/var/log/adminer
       # - portfolio_logs:/var/log/portfolio
-    ports:
-    #TODO togliere la porta forse non stando utilizzando fluentd come server
-      - "24224:24224"
     networks:
       - backend
     restart: always
