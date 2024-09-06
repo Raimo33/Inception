@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 15:29:21 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 16:33:19 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,12 @@ COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 
 RUN touch /var/log/setup.log /var/log/php82/access.log /var/log/php82/error.log
 
-RUN addgroup -g $GROUP_ID1 -S wp-group
-RUN adduser -u $USER_ID -G wp-group -SD wp-user
-RUN chown -R wp-user /usr/local/bin/wp /var/log/php82 /var/log/setup.log
+RUN addgroup -g $GROUP_ID1 -S wordpress-group
+RUN adduser -u $USER_ID -G wordpress-group -SD wordpress-user
+RUN chown -R wordpress-user /usr/local/bin/wp /var/log/php82 /var/log/setup.log
 RUN chmod +x /run/setup_wp.sh
 
-USER wp-user
+USER wordpress-user
 EXPOSE 9000
 VOLUME ["/var/www/html/wordpress", "/var/log"]
 

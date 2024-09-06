@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 15:29:04 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 16:31:05 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ RUN apk add --no-cache vsftpd curl
 RUN mkdir -p /var/run/vsftpd /home/vsftpd
 RUN touch /var/log/vsftpd.log
 
-RUN addgroup -g $GROUP_ID1 -S wp-group
-RUN adduser -u $USER_ID -G wp-group -SD vsftpd-user
+RUN addgroup -g $GROUP_ID1 -S wordpress-group
+RUN adduser -u $USER_ID -G wordpress-group -SD vsftpd-user
 RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
 RUN chmod -R 755 /etc/ssl
 

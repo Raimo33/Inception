@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 15:51:32 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 16:31:05 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ COPY ./conf/ssl				/etc/ssl
 RUN mkdir -p /run/nginx /var/log/nginx
 RUN touch /var/log/nginx/access.log /var/log/nginx/error.log
 
-RUN addgroup -g $GROUP_ID1 -S wp-group
-RUN addgroup -g $GROUP_ID2 -S am-group
+RUN addgroup -g $GROUP_ID1 -S wordpress-group
+RUN addgroup -g $GROUP_ID2 -S adminer-group
 RUN adduser -u $USER_ID -SD nginx-user
-RUN adduser nginx-user wp-group && adduser nginx-user am-group
+RUN adduser nginx-user wordpress-group && adduser nginx-user adminer-group
 RUN chown -R nginx-user /var/lib/nginx /run/nginx /var/log/nginx /etc/nginx/http.d
 RUN chmod -R 755 /etc/ssl
 

@@ -8,20 +8,20 @@
 	if ! wp core is-installed; then
 
 		wp core install --skip-email \
-			--url=$WP_URL \
-			--title=$WP_TITLE \
-			--admin_user=$WP_SUPERUSER \
-			--admin_password=$WP_SUPERUSER_PASSWORD \
-			--admin_email=$WP_SUPERUSER_EMAIL
+			--url=$WORDPRESS_URL \
+			--title=$WORDPRESS_TITLE \
+			--admin_user=$WORDPRESS_SUPERUSER \
+			--admin_password=$WORDPRESS_SUPERUSER_PASSWORD \
+			--admin_email=$WORDPRESS_SUPERUSER_EMAIL
 
-		wp user create $WP_USER $WP_USER_EMAIL \
+		wp user create $WORDPRESS_USER $WORDPRESS_USER_EMAIL \
 			--role=author \
-			--user_pass=$WP_USER_PASSWORD
+			--user_pass=$WORDPRESS_USER_PASSWORD
 
 		wp plugin install redis-cache --activate
 
-		wp config set WP_REDIS_HOST '$REDIS_HOST' --type=constant
-		wp config set WP_CACHE true --type=constant
+		wp config set WORDPRESS_REDIS_HOST '$REDIS_HOST' --type=constant
+		wp config set WORDPRESS_CACHE true --type=constant
 
 	fi
 } > /var/log/setup.log 2>&1

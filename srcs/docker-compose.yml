@@ -28,7 +28,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${NGINX_USER_UID}
-        - GROUP_ID1=${WP_GROUP_GID}
+        - GROUP_ID1=${WORDPRESS_GROUP_GID}
         - GROUP_ID2=${ADMINER_GROUP_GID}
     container_name: nginx
     volumes:
@@ -49,8 +49,8 @@ services:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
       args:
-        - USER_ID=${WP_USER_UID}
-        - GROUP_ID1=${WP_GROUP_GID}
+        - USER_ID=${WORDPRESS_USER_UID}
+        - GROUP_ID1=${WORDPRESS_GROUP_GID}
         - DB_HOST=${DB_HOST}
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
@@ -58,13 +58,13 @@ services:
     container_name: wordpress
     environment:
       - DB_HOST=${DB_HOST}
-      - WP_URL=${WP_URL}
-      - WP_USER=${WP_USER}
-      - WP_USER_PASSWORD=${WP_USER_PASSWORD}
-      - WP_USER_EMAIL=${WP_USER_EMAIL}
-      - WP_SUPERUSER=${WP_SUPERUSER}
-      - WP_SUPERUSER_PASSWORD=${WP_SUPERUSER_PASSWORD}
-      - WP_SUPERUSER_EMAIL=${WP_SUPERUSER_EMAIL}
+      - WORDPRESS_URL=${WORDPRESS_URL}
+      - WORDPRESS_USER=${WORDPRESS_USER}
+      - WORDPRESS_USER_PASSWORD=${WORDPRESS_USER_PASSWORD}
+      - WORDPRESS_USER_EMAIL=${WORDPRESS_USER_EMAIL}
+      - WORDPRESS_SUPERUSER=${WORDPRESS_SUPERUSER}
+      - WORDPRESS_SUPERUSER_PASSWORD=${WORDPRESS_SUPERUSER_PASSWORD}
+      - WORDPRESS_SUPERUSER_EMAIL=${WORDPRESS_SUPERUSER_EMAIL}
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - wordpress_logs:/var/log
@@ -101,7 +101,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${VSFTPD_USER_UID}
-        - GROUP_ID1=${WP_GROUP_GID}
+        - GROUP_ID1=${WORDPRESS_GROUP_GID}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
@@ -143,7 +143,7 @@ services:
   #     dockerfile: Dockerfile
   #     args:
   #       - USER_ID=${PORTFOLIO_USER_UID}
-  #       - GROUP_ID1=${WP_GROUP_GID}
+  #       - GROUP_ID1=${WORDPRESS_GROUP_GID}
   #   container_name: portfolio
   #   volumes:
   #     - wordpress_data:/var/www/html/wordpress
