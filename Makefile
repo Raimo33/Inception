@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 16:31:38 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 16:58:48 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ DATA_DIR				= /home/$(USERNAME)/data
 DATA_SUBDIRS			= mariadb wordpress adminer
 DATA_DIRS				= $(addprefix $(DATA_DIR)/, $(DATA_SUBDIRS))
 
-all: deps init build down up
+all: deps init build down up perms
 
 deps:
 	echo "installing $(DEPS)"
@@ -53,7 +53,17 @@ deps:
 init:
 	sudo mkdir -p $(DATA_DIRS) $(LOGS_DIRS)
 	echo "created data and logs folders"
-	#TODO non funziona chown dei gruppi
+	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
+	echo "added DNS resolution for $(DOMAIN_NAME)"
+	mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
+	sudo cp $(NGINX_CERT) $(FTP_CERT) $(LOCAL_CERTS_DIR)
+	echo "created ssl certificates"
+	sudo update-ca-certificates > /dev/null 2>&1
+	echo "added ssl certificates to trusted list"
+
+perms:
 	sudo chown -R $(WORDPRESS_USER_UID):$(WORDPRESS_GROUP_GID) $(DATA_DIR)/wordpress
 	sudo chown -R $(ADMINER_USER_UID):$(ADMINER_GROUP_GID) $(DATA_DIR)/adminer
 	sudo chown -R $(MARIADB_USER_UID) $(DATA_DIR)/mariadb $(LOGS_DIR)/mariadb
@@ -66,15 +76,6 @@ init:
 	sudo chmod -R 755 $(DATA_DIR) $(LOGS_DIR)
 	sudo chmod -R 774 $(DATA_DIR)/wordpress $(DATA_DIR)/adminer
 	echo "set permissions for data and logs folders"
-	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
-	echo "added DNS resolution for $(DOMAIN_NAME)"
-	mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
-	sudo cp $(NGINX_CERT) $(FTP_CERT) $(LOCAL_CERTS_DIR)
-	echo "created ssl certificates"
-	sudo update-ca-certificates > /dev/null 2>&1
-	echo "added ssl certificates to trusted list"
 
 up:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
