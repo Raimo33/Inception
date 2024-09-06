@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/05 15:56:06 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 13:42:17 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ RUN chmod -R 755 /etc/ssl
 
 USER nginx-user:wp-group
 EXPOSE 443
-VOLUME ["/var/www/html/wordpress", "/var/log/adminer", "/var/log"]
+VOLUME ["/var/www/html/wordpress", "/var/www/html/adminer", "/var/log"]
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 

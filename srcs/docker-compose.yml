@@ -99,7 +99,7 @@ services:
       context: ./requirements/vsftpd
       dockerfile: Dockerfile
       args:
-        - USER_ID=${FTP_USER_UID}
+        - USER_ID=${VSFTPD_USER_UID}
         - GROUP_ID=${WP_GROUP_ID}
     container_name: vsftpd
     volumes:
@@ -154,27 +154,6 @@ services:
   #   depends_on:
   #     - wordpress
   #   init: true
-  
-  fluentd:
-    build:
-      context: ./requirements/fluentd
-      dockerfile: Dockerfile
-      args:
-        - USER_ID=${FLUENTD_USER_UID}
-    container_name: fluentd
-    volumes:
-      - centralized-logs:/centralized-logs
-      - mariadb_logs:/var/log/mariadb
-      - nginx_logs:/var/log/nginx
-      - wordpress_logs:/var/log/wordpress
-      - redis_logs:/var/log/redis
-      - vsftpd_logs:/var/log/vsftpd
-      - adminer_logs:/var/log/adminer
-      # - portfolio_logs:/var/log/portfolio
-    networks:
-      - backend
-    restart: always
-    init: true
 
 volumes:
   mariadb_data:
@@ -195,19 +174,49 @@ volumes:
       type: none
       device: /home/${USERNAME}/data/adminer
       o: bind
-  centralized-logs:
+  #TODO accorciare i nomi dei volumi
+  mariadb_logs:
     driver: local
     driver_opts:
       type: none
-      device: /home/${USERNAME}/logs
+      device: /home/${USERNAME}/logs/mariadb
       o: bind
-  mariadb_logs:
   nginx_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/nginx
+      o: bind
   wordpress_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/wordpress
+      o: bind
   redis_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/redis
+      o: bind
   vsftpd_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/vsftpd
+      o: bind
   adminer_logs:
-  # portfolio_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/adminer
+      o: bind
+  portfolio_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/logs/portfolio
+      o: bind
 
 networks:
   backend:
