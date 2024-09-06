@@ -28,7 +28,8 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${NGINX_USER_UID}
-        - GROUP_ID=${WP_GROUP_ID}
+        - GROUP_ID1=${WP_GROUP_GID}
+        - GROUP_ID2=${ADMINER_GROUP_GID}
     container_name: nginx
     volumes:
       - wordpress_data:/var/www/html/wordpress
@@ -49,7 +50,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${WP_USER_UID}
-        - GROUP_ID=${WP_GROUP_ID}
+        - GROUP_ID1=${WP_GROUP_GID}
         - DB_HOST=${DB_HOST}
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
@@ -100,7 +101,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${VSFTPD_USER_UID}
-        - GROUP_ID=${WP_GROUP_ID}
+        - GROUP_ID1=${WP_GROUP_GID}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
@@ -122,6 +123,7 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${ADMINER_USER_UID}
+        - GROUP_ID1=${ADMINER_GROUP_GID}
     container_name: adminer
     volumes:
       - adminer_data:/var/www/html/adminer
@@ -141,7 +143,7 @@ services:
   #     dockerfile: Dockerfile
   #     args:
   #       - USER_ID=${PORTFOLIO_USER_UID}
-  #
+  #       - GROUP_ID1=${WP_GROUP_GID}
   #   container_name: portfolio
   #   volumes:
   #     - wordpress_data:/var/www/html/wordpress

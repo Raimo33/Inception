@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 13:36:40 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 15:29:21 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID DB_NAME DB_USER DB_PASSWORD DB_HOST
+ARG USER_ID GROUP_ID1 DB_NAME DB_USER DB_PASSWORD DB_HOST
 
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
 ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
@@ -29,12 +29,12 @@ COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 
 RUN touch /var/log/setup.log /var/log/php82/access.log /var/log/php82/error.log
 
-RUN addgroup -g $GROUP_ID -S wp-group
+RUN addgroup -g $GROUP_ID1 -S wp-group
 RUN adduser -u $USER_ID -G wp-group -SD wp-user
 RUN chown -R wp-user /usr/local/bin/wp /var/log/php82 /var/log/setup.log
 RUN chmod +x /run/setup_wp.sh
 
-USER wp-user:wp-group
+USER wp-user
 EXPOSE 9000
 VOLUME ["/var/www/html/wordpress", "/var/log"]
 

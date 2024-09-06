@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 14:36:00 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 15:59:40 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ FTP_KEY					= $(FTP_SSL)/private/vsftpd.key
 CERTS_SUBJ				= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR			= /usr/local/share/ca-certificates/
 
-WP_GROUP_GID			= 1000
 MARIADB_USER_UID		= 1001
 NGINX_USER_UID			= 1002
 WP_USER_UID				= 1003
@@ -33,6 +32,8 @@ REDIS_USER_UID			= 1004
 VSFTPD_USER_UID			= 1005
 ADMINER_USER_UID		= 1006
 PORTFOLIO_USER_UID		= 1007
+WP_GROUP_GID			= 1200
+ADMINER_GROUP_GID		= 1201
 
 LOGS_DIR				= /home/$(USERNAME)/logs
 LOGS_SUBDIRS			= mariadb nginx wordpress redis vsftpd adminer portfolio
@@ -52,15 +53,18 @@ deps:
 init:
 	sudo mkdir -p $(DATA_DIRS) $(LOGS_DIRS)
 	echo "created data and logs folders"
+	#TODO non funziona chown dei gruppi
+	sudo chown -R :$(WP_GROUP_GID) $(DATA_DIR)/wordpress
+	sudo chown -R :$(ADMINER_GROUP_GID) $(DATA_DIR)/adminer
 	sudo chown -R $(MARIADB_USER_UID) $(DATA_DIR)/mariadb $(LOGS_DIR)/mariadb
 	sudo chown -R $(NGINX_USER_UID) $(LOGS_DIR)/nginx
-	sudo chown -R :$(WP_GROUP_GID) $(DATA_DIR)/wordpress $(LOGS_DIR)/wordpress
+	sudo chown -R $(WP_USER_UID) $(LOGS_DIR)/wordpress
 	sudo chown -R $(REDIS_USER_UID) $(LOGS_DIR)/redis
 	sudo chown -R $(VSFTPD_USER_UID) $(LOGS_DIR)/vsftpd
-	sudo chown -R $(ADMINER_USER_UID) $(DATA_DIR)/adminer $(LOGS_DIR)/adminer
+	sudo chown -R $(ADMINER_USER_UID) $(LOGS_DIR)/adminer
 	sudo chown -R $(PORTFOLIO_USER_UID) $(LOGS_DIR)/portfolio
 	sudo chmod -R 755 $(DATA_DIR) $(LOGS_DIR)
-	sudo chmod -R 774 $(DATA_DIR)/wordpress
+	sudo chmod -R 774 $(DATA_DIR)/wordpress $(DATA_DIR)/adminer
 	echo "set permissions for data and logs folders"
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
@@ -85,9 +89,10 @@ restart:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) restart
 
 logs:
-	docker-compose -f $(DOCKER_COMPOSE_PATH) logs
+	echo "logs are stored in $(LOGS_DIR)"
 
 fclean:
+	#TODO fix warning USERNAME variable not set
 	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
 	sudo docker system prune --all --volumes
 	hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null

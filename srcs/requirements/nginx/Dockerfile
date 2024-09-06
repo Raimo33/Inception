@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 13:42:17 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 15:51:32 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID
+ARG USER_ID GROUP_ID1 GROUP_ID2
 
 RUN apk add --no-cache nginx curl
 
@@ -24,12 +24,14 @@ COPY ./conf/ssl				/etc/ssl
 RUN mkdir -p /run/nginx /var/log/nginx
 RUN touch /var/log/nginx/access.log /var/log/nginx/error.log
 
-RUN addgroup -g $GROUP_ID -S wp-group
-RUN adduser -u $USER_ID -G wp-group -SD nginx-user
+RUN addgroup -g $GROUP_ID1 -S wp-group
+RUN addgroup -g $GROUP_ID2 -S am-group
+RUN adduser -u $USER_ID -SD nginx-user
+RUN adduser nginx-user wp-group && adduser nginx-user am-group
 RUN chown -R nginx-user /var/lib/nginx /run/nginx /var/log/nginx /etc/nginx/http.d
 RUN chmod -R 755 /etc/ssl
 
-USER nginx-user:wp-group
+USER nginx-user
 EXPOSE 443
 VOLUME ["/var/www/html/wordpress", "/var/www/html/adminer", "/var/log"]
 
