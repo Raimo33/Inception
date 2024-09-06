@@ -6,11 +6,11 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 15:59:40 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/06 16:12:44 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-export USERNAME			= $(shell whoami)
+USERNAME				= $(shell whoami)
 
 DOCKER_COMPOSE_PATH		= srcs/docker-compose.yml
 DOMAIN_NAME				= craimond.42.fr
@@ -92,7 +92,6 @@ logs:
 	echo "logs are stored in $(LOGS_DIR)"
 
 fclean:
-	#TODO fix warning USERNAME variable not set
 	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
 	sudo docker system prune --all --volumes
 	hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null
