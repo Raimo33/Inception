@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:15:27 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 16:42:05 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID1 GROUP_ID2
+ARG USER_ID GROUP_ID1
 
 RUN apk add --no-cache nginx curl
 
@@ -25,9 +25,7 @@ RUN mkdir -p /run/nginx
 RUN touch /var/log/access.log /var/log/error.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
-RUN addgroup -g $GROUP_ID2 -S adminer-group
-RUN adduser -u $USER_ID -SD nginx-user
-RUN adduser nginx-user wordpress-group && adduser nginx-user adminer-group
+RUN adduser -u $USER_ID -G wordpress-group -SD nginx-user
 RUN chown -R nginx-user /var/lib/nginx /run/nginx /etc/nginx/http.d /var/log/access.log /var/log/error.log /var/log/nginx
 RUN chmod -R 755 /etc/ssl
 

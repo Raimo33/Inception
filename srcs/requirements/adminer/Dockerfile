@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 15:52:08 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 16:41:28 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID1
+ARG USER_ID
 
 RUN apk add --no-cache php php-fpm php-session php-mysqli php-json php-iconv php-phar php-dom php-ctype php-zlib curl
 ADD https://www.adminer.org/static/download/4.8.1/adminer-4.8.1.php /var/www/html/adminer/index.php
@@ -23,8 +23,7 @@ COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 RUN touch /var/log/php82/access.log /var/log/php82/error.log
 
-RUN addgroup -g $GROUP_ID1 -S adminer-group
-RUN adduser -u $USER_ID -G adminer-group -SD adminer-user
+RUN adduser -u $USER_ID -SD adminer-user
 RUN chown -R adminer-user /var/log/php82
 
 USER adminer-user

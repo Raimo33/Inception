@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:32:30 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 16:44:30 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,6 @@ export	REDIS_USER_UID			= 1004
 export	VSFTPD_USER_UID			= 1005
 export	ADMINER_USER_UID		= 1006
 export	WORDPRESS_GROUP_GID		= 1200
-export	ADMINER_GROUP_GID		= 1201
 
 export LOGS_DIR					:= /home/$(USERNAME)/logs
 LOGS_SUBDIRS					= mariadb nginx wordpress redis vsftpd adminer
@@ -65,7 +64,6 @@ init:
 
 perms:
 	sudo chown -R $(WORDPRESS_USER_UID):$(WORDPRESS_GROUP_GID) $(DATA_DIR)/wordpress
-	sudo chown -R $(ADMINER_USER_UID):$(ADMINER_GROUP_GID) $(DATA_DIR)/adminer
 	sudo chown -R $(MARIADB_USER_UID) $(DATA_DIR)/mariadb $(LOGS_DIR)/mariadb
 	sudo chown -R $(NGINX_USER_UID) $(LOGS_DIR)/nginx
 	sudo chown -R $(WORDPRESS_USER_UID) $(LOGS_DIR)/wordpress
@@ -73,7 +71,7 @@ perms:
 	sudo chown -R $(VSFTPD_USER_UID) $(LOGS_DIR)/vsftpd
 	sudo chown -R $(ADMINER_USER_UID) $(LOGS_DIR)/adminer
 	sudo chmod -R 755 $(DATA_DIR) $(LOGS_DIR)
-	sudo chmod -R 774 $(DATA_DIR)/wordpress $(DATA_DIR)/adminer
+	sudo chmod -R 774 $(DATA_DIR)/wordpress
 	echo "set permissions for data and logs folders"
 
 up:

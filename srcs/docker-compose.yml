@@ -29,7 +29,6 @@ services:
       args:
         - USER_ID=${NGINX_USER_UID}
         - GROUP_ID1=${WORDPRESS_GROUP_GID}
-        - GROUP_ID2=${ADMINER_GROUP_GID}
     container_name: nginx
     volumes:
       - wordpress_data:/var/www/html/wordpress:ro
@@ -125,7 +124,6 @@ services:
       dockerfile: Dockerfile
       args:
         - USER_ID=${ADMINER_USER_UID}
-        - GROUP_ID1=${ADMINER_GROUP_GID}
     container_name: adminer
     volumes:
       - adminer_data:/var/www/html/adminer
