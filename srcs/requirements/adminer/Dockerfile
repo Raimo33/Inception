@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:48:37 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 16:59:29 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,4 +33,6 @@ VOLUME 	[ "/var/www/html/adminer", "/var/log" ]
 
 ENTRYPOINT ["php-fpm82", "-F"]
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "fks", "http://adminer.backend:8080"]
+#TODO fix curl: (56) response reading failed (errno: 115)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fks", "http://adminer.backend:8080/index.php"]
+#curl -fkvi http://adminer.backend:8080
