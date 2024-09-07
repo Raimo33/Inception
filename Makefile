@@ -6,41 +6,40 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 16:58:48 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 16:32:30 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-USERNAME				= $(shell whoami)
+export USERNAME					:= $(shell whoami)
 
-DOCKER_COMPOSE_PATH		= srcs/docker-compose.yml
-DOMAIN_NAME				= craimond.42.fr
-DEPS					= docker-compose hostsed openssl ca-certificates
+DOCKER_COMPOSE_PATH				= srcs/docker-compose.yml
+DOMAIN_NAME						= craimond.42.fr
+DEPS							= docker-compose hostsed openssl ca-certificates
 
-NGINX_SSL				= srcs/requirements/nginx/conf/ssl
-FTP_SSL					= srcs/requirements/vsftpd/conf/ssl
-NGINX_CERT				= $(NGINX_SSL)/certs/nginx.crt
-NGINX_KEY				= $(NGINX_SSL)/private/nginx.key
-FTP_CERT				= $(FTP_SSL)/certs/vsftpd.crt
-FTP_KEY					= $(FTP_SSL)/private/vsftpd.key
-CERTS_SUBJ				= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
-LOCAL_CERTS_DIR			= /usr/local/share/ca-certificates/
+NGINX_SSL						= srcs/requirements/nginx/conf/ssl
+FTP_SSL							= srcs/requirements/vsftpd/conf/ssl
+NGINX_CERT						:= $(NGINX_SSL)/certs/nginx.crt
+NGINX_KEY						:= $(NGINX_SSL)/private/nginx.key
+FTP_CERT						:= $(FTP_SSL)/certs/vsftpd.crt
+FTP_KEY							:= $(FTP_SSL)/private/vsftpd.key
+CERTS_SUBJ						:= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
+LOCAL_CERTS_DIR					= /usr/local/share/ca-certificates/
 
-MARIADB_USER_UID		= 1001
-NGINX_USER_UID			= 1002
-WORDPRESS_USER_UID		= 1003
-REDIS_USER_UID			= 1004
-VSFTPD_USER_UID			= 1005
-ADMINER_USER_UID		= 1006
-PORTFOLIO_USER_UID		= 1007
-WORDPRESS_GROUP_GID		= 1200
-ADMINER_GROUP_GID		= 1201
+export	MARIADB_USER_UID		= 1001
+export	NGINX_USER_UID			= 1002
+export	WORDPRESS_USER_UID		= 1003
+export	REDIS_USER_UID			= 1004
+export	VSFTPD_USER_UID			= 1005
+export	ADMINER_USER_UID		= 1006
+export	WORDPRESS_GROUP_GID		= 1200
+export	ADMINER_GROUP_GID		= 1201
 
-LOGS_DIR				= /home/$(USERNAME)/logs
-LOGS_SUBDIRS			= mariadb nginx wordpress redis vsftpd adminer portfolio
-LOGS_DIRS				= $(addprefix $(LOGS_DIR)/, $(LOGS_SUBDIRS))
-DATA_DIR				= /home/$(USERNAME)/data
-DATA_SUBDIRS			= mariadb wordpress adminer
-DATA_DIRS				= $(addprefix $(DATA_DIR)/, $(DATA_SUBDIRS))
+export LOGS_DIR					:= /home/$(USERNAME)/logs
+LOGS_SUBDIRS					= mariadb nginx wordpress redis vsftpd adminer
+LOGS_DIRS						:= $(addprefix $(LOGS_DIR)/, $(LOGS_SUBDIRS))
+export DATA_DIR					:= /home/$(USERNAME)/data
+DATA_SUBDIRS					= mariadb wordpress
+DATA_DIRS						:= $(addprefix $(DATA_DIR)/, $(DATA_SUBDIRS))
 
 all: deps init build down up perms
 
@@ -51,6 +50,7 @@ deps:
 	echo "$(DEPS) installed"
 
 init:
+	sudo mkdir -p $(DATA_DIR) $(LOGS_DIR)
 	sudo mkdir -p $(DATA_DIRS) $(LOGS_DIRS)
 	echo "created data and logs folders"
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
@@ -72,7 +72,6 @@ perms:
 	sudo chown -R $(REDIS_USER_UID) $(LOGS_DIR)/redis
 	sudo chown -R $(VSFTPD_USER_UID) $(LOGS_DIR)/vsftpd
 	sudo chown -R $(ADMINER_USER_UID) $(LOGS_DIR)/adminer
-	sudo chown -R $(PORTFOLIO_USER_UID) $(LOGS_DIR)/portfolio
 	sudo chmod -R 755 $(DATA_DIR) $(LOGS_DIR)
 	sudo chmod -R 774 $(DATA_DIR)/wordpress $(DATA_DIR)/adminer
 	echo "set permissions for data and logs folders"
@@ -91,6 +90,8 @@ restart:
 
 logs:
 	echo "logs are stored in $(LOGS_DIR)"
+
+#TODO fix fclean warnings
 
 fclean:
 	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes

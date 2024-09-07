@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/09/05 18:54:26 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 15:03:07 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-RUN apk add --no-cache mariadb mariadb-client envsubst shadow tini
+RUN apk add --no-cache mariadb mariadb-client envsubst shadow
 
 ARG USER_ID DB_NAME DB_USER DB_PASSWORD
 

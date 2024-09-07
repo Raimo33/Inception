@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 16:31:05 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 15:52:08 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,4 +37,4 @@ VOLUME	["/var/www/html/wordpress", "/var/log"]
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
 #TODO fix curl: (56) response reading failed (errno: 115)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fk", "ftp://vsftpd.backend:21"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "fks", "ftp://vsftpd.backend:21"]

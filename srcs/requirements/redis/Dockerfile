@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/09/06 14:48:33 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/07 15:04:06 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID
 
-RUN apk add --no-cache redis tini
+RUN apk add --no-cache redis
 
 COPY ./conf/redis.conf	/etc/redis.conf
 
