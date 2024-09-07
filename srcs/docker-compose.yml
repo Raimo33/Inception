@@ -33,7 +33,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress:ro
       - adminer_data:/var/www/html/adminer:ro
-      - ./portfolio:/var/www/html/portfolio:ro
+      - ./requirements/portfolio:/var/www/html/portfolio:ro
       - nginx_logs:/var/log
     ports:
       - "443:443"
