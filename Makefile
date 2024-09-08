@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:44:30 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/08 14:47:04 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ DOMAIN_NAME						= craimond.42.fr
 DEPS							= docker-compose hostsed openssl ca-certificates
 
 NGINX_SSL						= srcs/requirements/nginx/conf/ssl
-FTP_SSL							= srcs/requirements/vsftpd/conf/ssl
+VSFTPD_SSL						= srcs/requirements/vsftpd/conf/ssl
 NGINX_CERT						:= $(NGINX_SSL)/certs/nginx.crt
 NGINX_KEY						:= $(NGINX_SSL)/private/nginx.key
-FTP_CERT						:= $(FTP_SSL)/certs/vsftpd.crt
-FTP_KEY							:= $(FTP_SSL)/private/vsftpd.key
+VSFTPD_CERT						:= $(VSFTPD_SSL)/certs/vsftpd.crt
+VSFTPD_KEY						:= $(VSFTPD_SSL)/private/vsftpd.key
 CERTS_SUBJ						:= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR					= /usr/local/share/ca-certificates/
 
@@ -54,10 +54,10 @@ init:
 	echo "created data and logs folders"
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
-	mkdir -p $(NGINX_SSL) $(FTP_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(FTP_SSL)/private $(FTP_SSL)/certs
+	mkdir -p $(NGINX_SSL) $(VSFTPD_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(VSFTPD_SSL)/private $(VSFTPD_SSL)/certs
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(NGINX_KEY) -out $(NGINX_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(FTP_KEY) -out $(FTP_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
-	sudo cp $(NGINX_CERT) $(FTP_CERT) $(LOCAL_CERTS_DIR)
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $(VSFTPD_KEY) -out $(VSFTPD_CERT) -subj $(CERTS_SUBJ) > /dev/null 2>&1
+	sudo cp $(NGINX_CERT) $(VSFTPD_CERT) $(LOCAL_CERTS_DIR)
 	echo "created ssl certificates"
 	sudo update-ca-certificates > /dev/null 2>&1
 	echo "added ssl certificates to trusted list"
@@ -72,6 +72,8 @@ perms:
 	sudo chown -R $(ADMINER_USER_UID) $(LOGS_DIR)/adminer
 	sudo chmod -R 755 $(DATA_DIR) $(LOGS_DIR)
 	sudo chmod -R 774 $(DATA_DIR)/wordpress
+	sudo chown -R $(NGINX_USER_UID) $(NGINX_SSL)
+	sudo chown -R $(VSFTPD_USER_UID) $(VSFTPD_SSL)
 	echo "set permissions for data and logs folders"
 
 up:
@@ -96,7 +98,7 @@ fclean:
 	sudo docker system prune --all --volumes
 	hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "removed domain $(DOMAIN_NAME) from hosts file"
-	sudo rm -rf $(NGINX_SSL) $(FTP_SSL)
+	sudo rm -rf $(NGINX_SSL) $(VSFTPD_SSL)
 	echo "removed ssl certificates"
 	sudo rm -rf $(DATA_DIR) $(LOGS_DIR)
 	echo "removed data and logs folders"

@@ -33,8 +33,9 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress:ro
       - adminer_data:/var/www/html/adminer:ro
-      - ./requirements/portfolio:/var/www/html/portfolio:ro
       - nginx_logs:/var/log
+      - ./requirements/nginx/conf/ssl:/etc/ssl:ro
+      - ./requirements/portfolio:/var/www/html/portfolio:ro
     ports:
       - "443:443"
     networks:
@@ -107,6 +108,7 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - vsftpd_logs:/var/log
+      - ./requirements/vsftpd/conf/ssl:/etc/ssl:ro
     ports:
       - "21:21"
       - "20:20"

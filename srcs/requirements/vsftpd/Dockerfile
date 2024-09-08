@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:54:19 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/08 14:41:55 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SHELL ["/bin/ash", "-c"]
 ARG USER_ID GROUP_ID1
 
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
-COPY ./conf/ssl			/etc/ssl
+# COPY ./conf/ssl			/etc/ssl
 
 RUN apk add --no-cache vsftpd curl
 
@@ -27,12 +27,12 @@ RUN touch /var/log/vsftpd.log
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SD vsftpd-user
 RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
-RUN chmod -R 755 /etc/ssl
+# RUN chmod -R 755 /etc/ssl
 
 USER	vsftpd-user
 EXPOSE	21 21000-21010 20
 WORKDIR	/home/vsftpd/vsftpd-user
-VOLUME	["/var/www/html/wordpress", "/var/log"]
+VOLUME	["/var/www/html/wordpress", "/etc/ssl", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
