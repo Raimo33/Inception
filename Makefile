@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 14:47:04 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/08 16:01:23 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,7 @@ logs:
 	echo "logs are stored in $(LOGS_DIR)"
 
 #TODO fix fclean warnings
+#TODO add last service (postfix/fluentd)
 
 fclean:
 	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes

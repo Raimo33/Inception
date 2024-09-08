@@ -1,5 +1,3 @@
-#TODO capire se FTPD deve essere accessibile dalla porta 443 e da nginx
-
 services:
 
   mariadb:
@@ -155,6 +153,8 @@ volumes:
       device: ${DATA_DIR}/wordpress
       o: bind
   adminer_data:
+
+  #TODO risolvere questione logs, troppi volumi, troppo difficile da mantenere
 
   mariadb_logs:
     driver: local
