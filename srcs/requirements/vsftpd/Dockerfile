@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 14:41:55 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/08 15:45:57 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,8 @@ SHELL ["/bin/ash", "-c"]
 ARG USER_ID GROUP_ID1
 
 COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
-# COPY ./conf/ssl			/etc/ssl
 
-RUN apk add --no-cache vsftpd curl
+RUN apk add --no-cache vsftpd lftp
 
 RUN mkdir -p /var/run/vsftpd /home/vsftpd
 RUN touch /var/log/vsftpd.log
@@ -27,7 +26,6 @@ RUN touch /var/log/vsftpd.log
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SD vsftpd-user
 RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
-# RUN chmod -R 755 /etc/ssl
 
 USER	vsftpd-user
 EXPOSE	21 21000-21010 20
@@ -36,5 +34,4 @@ VOLUME	["/var/www/html/wordpress", "/etc/ssl", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 
-#TODO fix curl: (56) response reading failed (errno: 115)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["curl", "-fks", "ftp://vsftpd.backend:21"]
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 CMD ["lftp", "-e", "quit", "-u", "anonymous,", "-p", "21", "vsftpd.backend"]

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/09/07 16:55:40 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/08 15:46:37 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,5 +41,4 @@ VOLUME ["/var/www/html/wordpress", "/var/log"]
 ENTRYPOINT ["/run/setup_wp.sh"]
 CMD ["php-fpm82", "-F"]
 
-#TODO fix curl: (56) response reading failed (errno: 115)
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fks", "https://wordpress.backend:9000"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fks", "https://nginx.backend:443/wordpress"]
