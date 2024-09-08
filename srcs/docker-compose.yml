@@ -138,6 +138,8 @@ services:
       - mariadb
     init: true
 
+  #TODO fluentd
+
 volumes:
 
   mariadb_data:
