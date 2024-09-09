@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/09 16:17:19 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/10 00:47:08 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ deps:
 
 init:
 	sudo mkdir -p $(DATA_DIR) $(DATA_DIRS) $(LOGS_DIR)
-	echo "created data and logs folders"
+	echo "created local volumes folders"
 	hostsed add 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "added DNS resolution for $(DOMAIN_NAME)"
 	mkdir -p $(NGINX_SSL) $(VSFTPD_SSL) $(NGINX_SSL)/private $(NGINX_SSL)/certs $(VSFTPD_SSL)/private $(VSFTPD_SSL)/certs
@@ -68,13 +68,16 @@ perms:
 	sudo chown -R $(VSFTPD_USER_UID) $(VSFTPD_SSL)
 	sudo chown -R $(VECTOR_USER_UID) $(LOGS_DIR)
 	sudo chmod -R 744 $(LOGS_DIR)
-	echo "set permissions for data and logs folders"
+	echo "set permissions for local volumes folders"
 
 up:
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d
+	docker-compose -f $(DOCKER_COMPOSE_PATH) up --detach
 
 down:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
+
+down-v:
+	docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
 
 build:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) build
@@ -85,19 +88,24 @@ restart:
 logs:
 	echo "logs are stored in $(LOGS_DIR)"
 
-#TODO fix fclean warnings
+clean: down
+	sudo docker system prune --force --all
 
-fclean:
-	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
-	sudo docker system prune --all --volumes
+fclean: .confirm down-v
+	sudo docker system prune --force --all --volumes
 	hostsed rm 127.0.0.1 $(DOMAIN_NAME) > /dev/null
 	echo "removed domain $(DOMAIN_NAME) from hosts file"
 	sudo rm -rf $(NGINX_SSL) $(VSFTPD_SSL)
 	echo "removed ssl certificates"
-	sudo rm -rf $(DATA_DIR)
-	echo "removed data and logs folders"
+	sudo rm -rf $(DATA_DIR) $(LOGS_DIR)
+	echo "removed local volumes folders"
+
+.confirm:
+	read -p "Are you sure? [y/N] " response; \
+	[ "$$response" = "y" ] || [ "$$response" = "Y" ] && exit 0 || exit 1
+
 
 re: fclean all
 
-.PHONY: all deps init up down build restart logs fclean re
+.PHONY:
 .SILENT:
