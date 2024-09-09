@@ -32,8 +32,13 @@ services:
       - wordpress_data:/var/www/html/wordpress:ro
       - adminer_data:/var/www/html/adminer:ro
       - nginx_logs:/var/log
-      - ./requirements/nginx/conf/ssl:/etc/ssl:ro
+      - ./requirements/nginx/conf/ssl/certs:/etc/ssl/certs:ro
       - ./requirements/portfolio:/var/www/html/portfolio:ro
+    secrets:
+      - source: nginx-key
+        target: /etc/ssl/private/nginx.key
+        uid: ${NGINX_USER_UID}
+        mode: 0400
     ports:
       - "443:443"
     networks:
@@ -106,7 +111,12 @@ services:
     volumes:
       - wordpress_data:/var/www/html/wordpress
       - vsftpd_logs:/var/log
-      - ./requirements/vsftpd/conf/ssl:/etc/ssl:ro
+      - ./requirements/vsftpd/conf/ssl/certs:/etc/ssl/certs:ro
+    secrets:
+      - source: vsftpd-key
+        target: /etc/ssl/private/vsftpd.key
+        uid: ${VSFTPD_USER_UID}
+        mode: 0400
     ports:
       - "21:21"
       - "20:20"
@@ -138,10 +148,33 @@ services:
       - mariadb
     init: true
 
-  #TODO fluentd
+  vector:
+    build:
+      context: ./requirements/vector
+      dockerfile: Dockerfile
+      args:
+        - USER_ID=${VECTOR_USER_UID}
+    container_name: vector
+    volumes:
+      - mariadb_logs:/var/log/mariadb
+      - nginx_logs:/var/log/nginx
+      - wordpress_logs:/var/log/wordpress
+      - redis_logs:/var/log/redis
+      - vsftpd_logs:/var/log/vsftpd
+      - adminer_logs:/var/log/adminer
+    ports:
+    networks:
+    restart: always
+    depends_on:
+      - mariadb
+      - nginx
+      - wordpress
+      - redis
+      - vsftpd
+      - adminer
+    init: true
 
 volumes:
-
   mariadb_data:
     driver: local
     driver_opts:
@@ -155,45 +188,18 @@ volumes:
       device: ${DATA_DIR}/wordpress
       o: bind
   adminer_data:
-
-  #TODO risolvere questione logs, troppi volumi, troppo difficile da mantenere
-
   mariadb_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/mariadb
-      o: bind
   nginx_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/nginx
-      o: bind
   wordpress_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/wordpress
-      o: bind
   redis_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/redis
-      o: bind
   vsftpd_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/vsftpd
-      o: bind
   adminer_logs:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${LOGS_DIR}/adminer
-      o: bind
+
+secrets:    
+  nginx-key:
+    file: ${NGINX_KEY}
+  vsftpd-key:
+    file: ${VSFTPD_KEY}
 
 networks:
   backend:

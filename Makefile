@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 16:01:23 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/09 14:36:25 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ DEPS							= docker-compose hostsed openssl ca-certificates
 NGINX_SSL						= srcs/requirements/nginx/conf/ssl
 VSFTPD_SSL						= srcs/requirements/vsftpd/conf/ssl
 NGINX_CERT						:= $(NGINX_SSL)/certs/nginx.crt
-NGINX_KEY						:= $(NGINX_SSL)/private/nginx.key
+export NGINX_KEY				:= $(NGINX_SSL)/private/nginx.key
 VSFTPD_CERT						:= $(VSFTPD_SSL)/certs/vsftpd.crt
-VSFTPD_KEY						:= $(VSFTPD_SSL)/private/vsftpd.key
+export VSFTPD_KEY				:= $(VSFTPD_SSL)/private/vsftpd.key
 CERTS_SUBJ						:= "/C=IT/ST=Italy/L=Florence/O=/OU=/CN=$(DOMAIN_NAME)"
 LOCAL_CERTS_DIR					= /usr/local/share/ca-certificates/
 
@@ -92,7 +92,6 @@ logs:
 	echo "logs are stored in $(LOGS_DIR)"
 
 #TODO fix fclean warnings
-#TODO add last service (postfix/fluentd)
 
 fclean:
 	sudo docker-compose -f $(DOCKER_COMPOSE_PATH) down --volumes
