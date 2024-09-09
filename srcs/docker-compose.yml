@@ -195,7 +195,6 @@ volumes:
   vsftpd_logs:
   adminer_logs:
 
-#TODO fix path non giusta (siamo gia dentro srcs)
 secrets:    
   nginx-key:
     file: ../${NGINX_KEY}
