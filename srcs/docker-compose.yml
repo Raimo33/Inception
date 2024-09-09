@@ -162,8 +162,7 @@ services:
       - redis_logs:/var/log/redis
       - vsftpd_logs:/var/log/vsftpd
       - adminer_logs:/var/log/adminer
-    ports:
-    networks:
+      - combined_logs:/run/combined_logs
     restart: always
     depends_on:
       - mariadb
@@ -194,6 +193,12 @@ volumes:
   redis_logs:
   vsftpd_logs:
   adminer_logs:
+  combined_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${LOGS_DIR}
+      o: bind
 
 secrets:    
   nginx-key:

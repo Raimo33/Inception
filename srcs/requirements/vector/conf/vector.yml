@@ -1,0 +1,24 @@
+sources:
+  logs:
+    type: file
+    include:
+      - "/var/log/**/**/*"
+    ignore_older: 10s
+    fingerprinting:
+      strategy: checksum
+    read_from: beginning
+
+transforms:
+  restructure:
+    type: remap
+    inputs: [logs]
+    source: |
+      .file_path = file.path
+
+sinks:
+  save_logs:
+    type: file
+    inputs: [restructure]
+    path: "/run/combined_logs/{{ file_path }}"
+    encoding:
+      codec: json

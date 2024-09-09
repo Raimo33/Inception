@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/09 15:10:33 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/09 15:25:24 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SD nginx-user
 RUN chown -R nginx-user /var/lib/nginx /run/nginx /etc/nginx/http.d /var/log/access.log /var/log/error.log /var/log/nginx
 
+WORKDIR /etc/nginx/http.d
 USER nginx-user
 EXPOSE 443
 VOLUME ["/var/www/html/wordpress", "/var/www/html/adminer", "/var/www/html/portfolio", "/etc/ssl/certs", "/var/log"]

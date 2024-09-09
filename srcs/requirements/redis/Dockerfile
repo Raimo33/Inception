@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 15:46:32 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/09 15:26:02 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ RUN touch /var/log/redis.log
 RUN adduser -u $USER_ID -DS redis-user
 RUN chown -R redis-user /var/log/redis.log /var/log/redis
 
+WORKDIR /etc
 USER redis-user
 EXPOSE 6379
 VOLUME ["/var/log"]
