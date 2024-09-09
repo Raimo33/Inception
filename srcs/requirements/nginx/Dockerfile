@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 15:27:29 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/09 15:10:33 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ RUN chown -R nginx-user /var/lib/nginx /run/nginx /etc/nginx/http.d /var/log/acc
 
 USER nginx-user
 EXPOSE 443
-VOLUME ["/var/www/html/wordpress", "/var/www/html/adminer", "/var/www/html/portfolio", "/etc/ssl", "/var/log"]
+VOLUME ["/var/www/html/wordpress", "/var/www/html/adminer", "/var/www/html/portfolio", "/etc/ssl/certs", "/var/log"]
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 

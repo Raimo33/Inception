@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 15:45:57 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/09 15:12:13 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
 USER	vsftpd-user
 EXPOSE	21 21000-21010 20
 WORKDIR	/home/vsftpd/vsftpd-user
-VOLUME	["/var/www/html/wordpress", "/etc/ssl", "/var/log"]
+VOLUME	["/var/www/html/wordpress", "/etc/ssl/certs", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
 

@@ -197,9 +197,9 @@ volumes:
 
 secrets:    
   nginx-key:
-    file: ${NGINX_KEY}
+    file: ../${NGINX_KEY}
   vsftpd-key:
-    file: ${VSFTPD_KEY}
+    file: ../${VSFTPD_KEY}
 
 networks:
   backend:
