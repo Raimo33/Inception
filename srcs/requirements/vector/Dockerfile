@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 15:02:50 by craimond          #+#    #+#              #
-#    Updated: 2024/09/10 16:53:38 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/10 17:03:39 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,5 +34,4 @@ VOLUME ["/run/combined_logs", "/var/log/mariadb", "/var/log/nginx", "/var/log/wo
 
 ENTRYPOINT ["vector", "-c", "/etc/vector/vector.yml"]
 
-#TODO fix healthcheck
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fks", "http://vector.backend:8686/healthcheck"]
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["vector", "validate", "/etc/vector/vector.yml"]
