@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/10 00:47:08 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/10 14:40:24 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -101,9 +101,9 @@ fclean: .confirm down-v
 	echo "removed local volumes folders"
 
 .confirm:
-	read -p "Are you sure? [y/N] " response; \
-	[ "$$response" = "y" ] || [ "$$response" = "Y" ] && exit 0 || exit 1
-
+	echo "Are you sure you want to continue? (y/n)"; \
+	read RESPONSE; \
+	if [ "$$RESPONSE" != "y" ] && [ "$$RESPONSE" != "Y" ]; then exit 1; fi
 
 re: fclean all
 

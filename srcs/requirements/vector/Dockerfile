@@ -6,11 +6,10 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 15:02:50 by craimond          #+#    #+#              #
-#    Updated: 2024/09/10 00:51:01 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/10 16:53:38 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#TODO implement
 
 FROM alpine:3.19
 
@@ -18,22 +17,22 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID
 
-RUN apk add --no-cache bash
-ADD --chmod=744 https://sh.vector.dev /tmp/install_vector.sh
-RUN /tmp/install_vector.sh -y && rm -f /tmp/install_vector.sh
+RUN apk add --no-cache curl
+RUN curl --proto '=https' --tlsv1.2 -sSfL https://sh.vector.dev | ash -s -- -y --prefix /usr/local
 
 COPY ./conf/vector.yml	/etc/vector/vector.yml
 
-RUN mkdir -p /run/combined_logs
+RUN mkdir -p /run/combined_logs /var/lib/vector
 
 RUN adduser -u $USER_ID -SD vector-user
-RUN chown -R vector-user /etc/vector /var/run/combined_logs
+RUN chown -R vector-user /var/lib/vector /etc/vector /run/combined_logs
 
-# WORKDIR
+WORKDIR /run/combined_logs
 USER vector-user
-# EXPOSE
+EXPOSE 8686
 VOLUME ["/run/combined_logs", "/var/log/mariadb", "/var/log/nginx", "/var/log/wordpress", "/var/log/redis", "/var/log/vsftpd", "/var/log/adminer"]
 
-ENTRYPOINT ["vector", "-c", "/etc/vector/vector.yaml"]
+ENTRYPOINT ["vector", "-c", "/etc/vector/vector.yml"]
 
-# HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD []
+#TODO fix healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD ["curl", "-fks", "http://vector.backend:8686/healthcheck"]

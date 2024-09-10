@@ -163,6 +163,10 @@ services:
       - vsftpd_logs:/var/log/vsftpd
       - adminer_logs:/var/log/adminer
       - combined_logs:/run/combined_logs
+    ports:
+      - "8686:8686"
+    networks:
+      - backend  
     restart: always
     depends_on:
       - mariadb
