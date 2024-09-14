@@ -6,9 +6,11 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/09 15:12:13 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/14 16:17:53 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#TODO fix file transfer
 
 FROM alpine:3.19
 
