@@ -33,7 +33,7 @@ services:
       - adminer_data:/var/www/html/adminer:ro
       - nginx_logs:/var/log
       - ./requirements/nginx/conf/ssl/certs:/etc/ssl/certs:ro
-      - ./requirements/portfolio:/var/www/html/portfolio:ro
+      - ./requirements/website:/var/www/html/website:ro
     secrets:
       - source: nginx-key
         target: /etc/ssl/private/nginx.key

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/14 16:17:53 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/14 17:02:19 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,16 +22,16 @@ COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
 
 RUN apk add --no-cache vsftpd lftp
 
-RUN mkdir -p /var/run/vsftpd /home/vsftpd
+RUN mkdir -p /var/run/vsftpd /home/vsftpd-user
 RUN touch /var/log/vsftpd.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SD vsftpd-user
-RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
+RUN chown -R vsftpd-user /home/vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
 
 USER	vsftpd-user
-EXPOSE	21 21000-21010 20
-WORKDIR	/home/vsftpd/vsftpd-user
+EXPOSE	21 20 21000-21010
+WORKDIR	/home/vsftpd-user
 VOLUME	["/var/www/html/wordpress", "/etc/ssl/certs", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]
