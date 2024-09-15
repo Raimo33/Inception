@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/09 15:02:50 by craimond          #+#    #+#              #
-#    Updated: 2024/09/10 17:03:39 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:09:00 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ COPY ./conf/vector.yml	/etc/vector/vector.yml
 
 RUN mkdir -p /run/combined_logs /var/lib/vector
 
-RUN adduser -u $USER_ID -SD vector-user
+RUN adduser -u $USER_ID -SDH vector-user
 RUN chown -R vector-user /var/lib/vector /etc/vector /run/combined_logs
 
 WORKDIR /run/combined_logs

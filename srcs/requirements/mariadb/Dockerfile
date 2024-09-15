@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 14:59:01 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 15:46:23 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:06:24 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ COPY ./conf/mariadb-server.cnf	/etc/my.cnf.d/mariadb-server.cnf
 RUN mkdir -p /run/mysqld /var/log/mysql /var/lib/mysql
 RUN touch /var/log/mysql/error.log /var/log/mysql/query.log /var/log/mysql/slow_query.log
 
-RUN adduser -u $USER_ID -SD mariadb_user
+RUN adduser -u $USER_ID -SDH mariadb_user
 RUN chown -R mariadb_user /var/lib/mysql /var/log/mysql /run/mysqld /etc/my.cnf.d/
 RUN chmod +x /tmp/init_db.sh
 

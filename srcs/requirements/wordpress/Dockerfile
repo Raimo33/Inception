@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/09/08 15:46:37 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:09:18 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID GROUP_ID1 DB_NAME DB_USER DB_PASSWORD DB_HOST
 
+#TODO remove
+RUN apk add --no-cache lftp
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
 ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
 
@@ -30,7 +32,7 @@ COPY ./tools/setup_wp.sh	/run/setup_wp.sh
 RUN touch /var/log/setup.log /var/log/php82/access.log /var/log/php82/error.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
-RUN adduser -u $USER_ID -G wordpress-group -SD wordpress-user
+RUN adduser -u $USER_ID -G wordpress-group -SDH wordpress-user
 RUN chown -R wordpress-user /usr/local/bin/wp /var/log/php82 /var/log/setup.log
 RUN chmod +x /run/setup_wp.sh
 

@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/06 01:09:08 by craimond          #+#    #+#              #
-#    Updated: 2024/09/10 14:40:24 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 14:24:42 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ DOCKER_COMPOSE_PATH				= srcs/docker-compose.yml
 DOMAIN_NAME						= craimond.42.fr
 DEPS							= docker-compose hostsed openssl ca-certificates
 
-NGINX_SSL						= srcs/requirements/nginx/conf/ssl
-VSFTPD_SSL						= srcs/requirements/vsftpd/conf/ssl
+export NGINX_SSL				= srcs/requirements/nginx/conf/ssl
+export VSFTPD_SSL				= srcs/requirements/vsftpd/conf/ssl
 NGINX_CERT						:= $(NGINX_SSL)/certs/nginx.crt
 export NGINX_KEY				:= $(NGINX_SSL)/private/nginx.key
 VSFTPD_CERT						:= $(VSFTPD_SSL)/certs/vsftpd.crt

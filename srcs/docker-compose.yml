@@ -32,7 +32,7 @@ services:
       - wordpress_data:/var/www/html/wordpress:ro
       - adminer_data:/var/www/html/adminer:ro
       - nginx_logs:/var/log
-      - ./requirements/nginx/conf/ssl/certs:/etc/ssl/certs:ro
+      - ../${NGINX_SSL}/certs:/etc/ssl/certs:ro
       - ./requirements/website:/var/www/html/website:ro
     secrets:
       - source: nginx-key
@@ -107,11 +107,13 @@ services:
       args:
         - USER_ID=${VSFTPD_USER_UID}
         - GROUP_ID1=${WORDPRESS_GROUP_GID}
+        - FTP_USER=${FTP_USER}
+        - FTP_PASSWORD=${FTP_PASSWORD}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
+      - ../${VSFTPD_SSL}/certs:/etc/ssl/certs:ro
       - vsftpd_logs:/var/log
-      - ./requirements/vsftpd/conf/ssl/certs:/etc/ssl/certs:ro
     secrets:
       - source: vsftpd-key
         target: /etc/ssl/private/vsftpd.key

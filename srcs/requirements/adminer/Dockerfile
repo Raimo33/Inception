@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 11:31:11 by craimond          #+#    #+#              #
-#    Updated: 2024/09/09 15:36:02 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:06:19 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ COPY ./conf/www.conf /etc/php82/php-fpm.d/www.conf
 
 RUN touch /var/log/php82/access.log /var/log/php82/error.log
 
-RUN adduser -u $USER_ID -SD adminer-user
+RUN adduser -u $USER_ID -SDH adminer-user
 RUN chown -R adminer-user /var/log/php82
 
 USER adminer-user

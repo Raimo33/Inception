@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 15:58:37 by craimond          #+#    #+#              #
-#    Updated: 2024/09/09 15:26:02 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:08:51 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ COPY ./conf/redis.conf	/etc/redis.conf
 
 RUN touch /var/log/redis.log
 
-RUN adduser -u $USER_ID -DS redis-user
+RUN adduser -u $USER_ID -SDH redis-user
 RUN chown -R redis-user /var/log/redis.log /var/log/redis
 
 WORKDIR /etc

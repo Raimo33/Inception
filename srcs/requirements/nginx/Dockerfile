@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:52:59 by craimond          #+#    #+#              #
-#    Updated: 2024/09/14 16:50:36 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 16:06:36 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ RUN mkdir -p /run/nginx
 RUN touch /var/log/access.log /var/log/error.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
-RUN adduser -u $USER_ID -G wordpress-group -SD nginx-user
+RUN adduser -u $USER_ID -G wordpress-group -SDH nginx-user
 RUN chown -R nginx-user /var/lib/nginx /run/nginx /etc/nginx/http.d /var/log/access.log /var/log/error.log /var/log/nginx
 
 WORKDIR /etc/nginx/http.d
