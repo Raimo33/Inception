@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/15 16:06:02 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/15 22:11:01 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,11 @@ RUN touch /var/log/vsftpd.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SDH vsftpd-user
-RUN chown -R vsftpd-user /etc/vsftpd /var/run/vsftpd /var/log/vsftpd.log
+RUN chown -R vsftpd-user /var/run/vsftpd /var/log/vsftpd.log
 
 RUN adduser -D $FTP_USER
 RUN echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
 
-USER	vsftpd-user
 EXPOSE	21 20 21000-21010
 WORKDIR	/home/ftp-user
 VOLUME	["/var/www/html/wordpress", "/etc/ssl/certs", "/var/log"]
