@@ -7,8 +7,8 @@ create_ftp_user()
 
 	if id "$user" >/dev/null 2>&1; then
 		echo "User $user already exists"
-        return
-    fi
+		return
+	fi
 
 	adduser -D $user
 	echo "$user:$password" | chpasswd
