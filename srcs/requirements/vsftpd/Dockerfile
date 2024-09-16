@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/15 22:11:01 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/16 14:48:10 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,11 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID1 FTP_USER FTP_PASSWORD
+ARG USER_ID GROUP_ID1 FTP_USER FTP_USER_PASSWORD
 
-COPY ./conf/vsftpd.conf	/etc/vsftpd/vsftpd.conf
+COPY ./conf/vsftpd.conf			/etc/vsftpd/vsftpd.conf
+COPY ./conf/pam.d/vsftpd		/etc/pam.d/vsftpd
+COPY ./tools/create_users.sh	/tmp/create_users.sh
 
 RUN apk add --no-cache vsftpd lftp
 
@@ -27,13 +29,12 @@ RUN touch /var/log/vsftpd.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SDH vsftpd-user
-RUN chown -R vsftpd-user /var/run/vsftpd /var/log/vsftpd.log
+RUN chmod 755 /tmp/create_users.sh /var/run/vsftpd /var/log/vsftpd.log
 
-RUN adduser -D $FTP_USER
-RUN echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+RUN /tmp/create_users.sh && rm -rf /tmp
 
 EXPOSE	21 20 21000-21010
-WORKDIR	/home/ftp-user
+WORKDIR	/home
 VOLUME	["/var/www/html/wordpress", "/etc/ssl/certs", "/var/log"]
 
 ENTRYPOINT ["vsftpd", "/etc/vsftpd/vsftpd.conf"]

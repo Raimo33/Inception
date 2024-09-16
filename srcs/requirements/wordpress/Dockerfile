@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 15:51:03 by craimond          #+#    #+#              #
-#    Updated: 2024/09/15 16:09:18 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/16 13:52:14 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID1 DB_NAME DB_USER DB_PASSWORD DB_HOST
+ARG USER_ID GROUP_ID1 DB_NAME DB_USER DB_USER_PASSWORD DB_HOST
 
 #TODO remove
 RUN apk add --no-cache lftp
@@ -24,7 +24,7 @@ ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp
 WORKDIR	/var/www/html/wordpress
 
 RUN wp core download --version=6.5.5
-RUN wp config create --skip-check --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASSWORD --dbhost=$DB_HOST
+RUN wp config create --skip-check --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_USER_PASSWORD --dbhost=$DB_HOST
 
 COPY ./conf/www.conf		/etc/php82/php-fpm.d/www.conf
 COPY ./tools/setup_wp.sh	/run/setup_wp.sh

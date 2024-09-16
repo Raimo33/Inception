@@ -7,7 +7,7 @@ services:
       args:
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_USER_PASSWORD=${DB_USER_PASSWORD}
         - USER_ID=${MARIADB_USER_UID}
     container_name: mariadb
     volumes:
@@ -58,7 +58,7 @@ services:
         - DB_HOST=${DB_HOST}
         - DB_NAME=${DB_NAME}
         - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
+        - DB_USER_PASSWORD=${DB_USER_PASSWORD}
     container_name: wordpress
     environment:
       - DB_HOST=${DB_HOST}
@@ -108,7 +108,7 @@ services:
         - USER_ID=${VSFTPD_USER_UID}
         - GROUP_ID1=${WORDPRESS_GROUP_GID}
         - FTP_USER=${FTP_USER}
-        - FTP_PASSWORD=${FTP_PASSWORD}
+        - FTP_USER_PASSWORD=${FTP_USER_PASSWORD}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
