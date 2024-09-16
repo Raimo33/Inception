@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/16 15:32:19 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/16 16:12:21 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,15 @@ COPY ./tools/create_users.sh	/tmp/create_users.sh
 RUN apk add --no-cache vsftpd lftp
 
 RUN mkdir -p /var/run/vsftpd
-RUN touch /var/log/vsftpd.log
+RUN touch /var/log/vsftpd.log /var/log/xferlog.log
 
 RUN addgroup -g $GROUP_ID1 -S wordpress-group
 RUN adduser -u $USER_ID -G wordpress-group -SDH vsftpd-user
-RUN chmod 755 /tmp/create_users.sh /var/run/vsftpd /var/log/vsftpd.log
+RUN chmod 755 /tmp/create_users.sh /var/run/vsftpd /var/log/vsftpd.log /var/log/xferlog.log
 
 RUN /tmp/create_users.sh && rm -rf /tmp
 
-EXPOSE	21 20 21000-21010
+EXPOSE	21 21000-21010
 WORKDIR	/home
 VOLUME	["/var/www/html/wordpress", "/etc/ssl/certs", "/var/log"]
 
