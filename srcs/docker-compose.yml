@@ -109,6 +109,8 @@ services:
         - GROUP_ID1=${WORDPRESS_GROUP_GID}
         - FTP_USER=${FTP_USER}
         - FTP_USER_PASSWORD=${FTP_USER_PASSWORD}
+        - FTP_WP_USER=${FTP_WP_USER}
+        - FTP_WP_USER_PASSWORD=${FTP_WP_USER_PASSWORD}
     container_name: vsftpd
     volumes:
       - wordpress_data:/var/www/html/wordpress
