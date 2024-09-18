@@ -1,2 +1,2 @@
 local_root=/var/www/html/wordpress
-chroot_local_user=YES
+allow_writeable_chroot=YES
