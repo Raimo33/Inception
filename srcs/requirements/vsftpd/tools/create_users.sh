@@ -23,9 +23,7 @@ create_ftp_user()
 	echo "User $user created with writable subdirectory $home_dir/files"
 }
 
-#TODO fix ftp-wp-user non ha accesso
-adduser -G wordpress-group -DH $FTP_WP_USER
-echo "$FTP_WP_USER:$FTP_WP_USER_PASSWORD" | chpasswd
-echo "user $FTP_WP_USER with access to wordpress dir created"
-
 create_ftp_user "$FTP_USER" "$FTP_USER_PASSWORD"
+
+create_ftp_user "$FTP_WP_USER" "$FTP_WP_USER_PASSWORD"
+addgroup "$FTP_WP_USER" wordpress-group

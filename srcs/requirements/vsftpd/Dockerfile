@@ -6,7 +6,7 @@
 #    By: craimond <bomboclat@bidol.juis>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/08 23:57:04 by craimond          #+#    #+#              #
-#    Updated: 2024/09/17 11:06:04 by craimond         ###   ########.fr        #
+#    Updated: 2024/09/19 15:36:24 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ FROM alpine:3.19
 
 SHELL ["/bin/ash", "-c"]
 
-ARG USER_ID GROUP_ID1 FTP_USER FTP_USER_PASSWORD FTP_WP_USER FT_WP_USER_PASSWORD
+ARG USER_ID GROUP_ID1 FTP_USER FTP_USER_PASSWORD FTP_WP_USER FTP_WP_USER_PASSWORD
 
 COPY ./conf/vsftpd.conf			/etc/vsftpd/vsftpd.conf
 COPY ./conf/user_config			/etc/vsftpd/user_config
