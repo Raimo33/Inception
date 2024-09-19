@@ -16,8 +16,6 @@ SHELL ["/bin/ash", "-c"]
 
 ARG USER_ID GROUP_ID1 DB_NAME DB_USER DB_USER_PASSWORD DB_HOST
 
-#TODO remove
-RUN apk add --no-cache lftp
 RUN apk add --no-cache php php-fpm php-mysqli php-json php-curl php-mbstring php-xml php-phar php-tokenizer curl mariadb-client
 ADD --chmod=755 https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar /usr/local/bin/wp
 
